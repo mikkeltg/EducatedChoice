@@ -14,16 +14,7 @@ import LoginForm from './components/LoginForm';
 import SignUpForm from './components/SignUpForm';
 
 
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBJ5ev4aFTWGFI5kqWXVtMcvhLgylXBL6Q",
-  authDomain: "educated-choice.firebaseapp.com",
-  projectId: "educated-choice",
-  storageBucket: "educated-choice.appspot.com",
-  messagingSenderId: "416843846158",
-  appId: "1:416843846158:web:20fd7a2ab2428c8017225f",
-  measurementId: "G-ELSS69HT2K"
-};
+import { firebaseConfig } from './FirebaseConfig';
 
 // Initialize Firebase
 
