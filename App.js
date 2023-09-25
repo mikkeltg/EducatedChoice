@@ -1,6 +1,10 @@
 import React, {useEffect, useState} from 'react';
+import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+//import StackNavigator from "./components/StackNavigator";
 
 //Importere Firebase Services
 import { getApps, initializeApp } from "firebase/app";
@@ -12,21 +16,20 @@ import { Card } from 'react-native-paper';
 import ProfileScreen from './components/ProfileScreen';
 import LoginForm from './components/LoginForm';
 import SignUpForm from './components/SignUpForm';
+import WelcomeScreen from './components/WelcomeScreen';
 
 
 import { firebaseConfig } from './FirebaseConfig';
 
-// Initialize Firebase
+const Stack = createStackNavigator();
 
 export default function App() {
   const [user, setUser] = useState({ loggedIn: false });
 
+    // TJek om kører -> Hvis ikke, så start den
   if (getApps().length < 1) {
     initializeApp(firebaseConfig);
-    console.log("Firebase On!");
-    // Initialize other firebase products here
-  } else {
-    console.log("Firebase not on!");
+    
   }
  
   const auth = getAuth();
@@ -48,7 +51,6 @@ export default function App() {
     });
   }
 
- //Heri aktiverer vi vores listener i form af onAuthStateChanged, så vi dynamisk observerer om brugeren er aktiv eller ej.
   useEffect(() => {
     const unsubscribe = onAuthStateChange(setUser);
     return () => {
@@ -59,20 +61,14 @@ export default function App() {
   //Her oprettes gæstekomponentsindhold, der udgøres af sign-up og login siderne
   const GuestPage = () => {
     return(
-        <View style={styles.container}>
-          <Text style={styles.paragraph}>
-            Opret eller Login med din firebase Email
-          </Text>
-          
-          <Card style={{padding:20, margin: 20}}>
-            <SignUpForm />
-          </Card>
-          
-          <Card style={{padding:20, margin: 20}}>
-            <LoginForm />
-          </Card>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Welcome">
+          <Stack.Screen name="Welcome" component={WelcomeScreen} />
+          <Stack.Screen name="SignUp" component={SignUpForm} />
+          <Stack.Screen name="SignIn" component={LoginForm} />
+        </Stack.Navigator>
+      </NavigationContainer>
 
-        </View>
     )
   }
 
