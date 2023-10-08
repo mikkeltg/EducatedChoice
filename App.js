@@ -5,7 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 //import StackNavigator from "./components/StackNavigator";
-import Navigator from './Components/Navigator';
+import Navigator from './components/Navigator';
 
 //Importere Firebase Services
 import { getApps, initializeApp } from "firebase/app";
