@@ -5,6 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 //import StackNavigator from "./components/StackNavigator";
+import Navigator from './Components/Navigator';
 
 //Importere Firebase Services
 import { getApps, initializeApp } from "firebase/app";
@@ -78,6 +79,14 @@ export default function App() {
   return user.loggedIn ? <ProfileScreen /> : <GuestPage/> ;
 
 }
+
+function App() {
+  return (
+    <Navigator />
+  );
+}
+
+export default App;
 
 const styles = StyleSheet.create({
   container: {
