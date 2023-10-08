@@ -80,13 +80,6 @@ export default function App() {
 
 }
 
-function App() {
-  return (
-    <Navigator />
-  );
-}
-
-export default App;
 
 const styles = StyleSheet.create({
   container: {
