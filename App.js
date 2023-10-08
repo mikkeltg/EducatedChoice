@@ -62,6 +62,7 @@ export default function App() {
   //Her oprettes gæstekomponentsindhold, der udgøres af sign-up og login siderne
   const GuestPage = () => {
     return(
+
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Welcome">
           <Stack.Screen name="Welcome" component={WelcomeScreen} />
