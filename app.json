@@ -3,6 +3,7 @@
     "name": "Educated_Choice",
     "slug": "Educated_Choice",
     "version": "1.0.0",
+    "main": "app.js",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
