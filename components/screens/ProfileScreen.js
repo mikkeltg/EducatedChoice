@@ -18,7 +18,7 @@ function ProfileScreen() {
     const fetchUserProfile = async () => {
       if (user) {
         const db = getFirestore();
-        const userDocRef = doc(db, "users", user.uid); // Updated collection name to 'users'
+        const userDocRef = doc(db, "users", user.uid);
 
         try {
           const docSnap = await getDoc(userDocRef);
@@ -66,16 +66,10 @@ function ProfileScreen() {
       {profileInfo && (
         <View>
           <Text style={GlobalStyles.header}>Profile information</Text>
-          <Text>Email: {profileInfo.email || "Not available"}</Text>
-          <Text>Name: {profileInfo.navn || "Not available"}</Text>
-          <Text>Snit: {profileInfo.snit || "Not available"}</Text>
-          <Text>
-            Ønsket lokation: {profileInfo["ønsket lokation"] || "Not available"}
-          </Text>
-          <Text>
-            Ungdomsuddannelse:{" "}
-            {profileInfo.ungdomsuddannelse || "Not available"}
-          </Text>
+          <Text style={GlobalStyles.profileTextStyle}>Email: {profileInfo.email || "Not available"}</Text>
+          <Text style={GlobalStyles.profileTextStyle}>Name: {profileInfo.name || "Not available"}</Text>
+          <Text style={GlobalStyles.profileTextStyle}>Snit: {profileInfo.snit || "Not available"}</Text>
+          <Text style={GlobalStyles.profileTextStyle}>Ønsket lokation: {profileInfo.location || "Not available"}</Text>
         </View>
       )}
       <Pressable style={GlobalStyles.button} onPress={() => handleLogOut()}>

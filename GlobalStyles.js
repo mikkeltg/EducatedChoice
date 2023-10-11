@@ -5,6 +5,12 @@ const GlobalStyles = StyleSheet.create
     backgroundColor: {
         backgroundColor: '#CFD7C7',
     },
+
+    text: {
+        fontSize: 16,
+        textAlign: 'center',
+        margin: 10,
+    },
     
     container: { 
         flex: 1, 
@@ -103,8 +109,53 @@ const GlobalStyles = StyleSheet.create
         width: 300
     },
 
-}) 
+    educationItem: {
+        backgroundColor: "#CFD7C7",
+        padding: 10,
+        borderRadius: 5,
+        marginBottom: 10,
+      },
+      educationName: {
+        fontSize: 18,
+        fontWeight: "bold",
+      },
+      educationDescription: {
+        fontSize: 16,
+      },
+      inputField: {
+        borderWidth: 1,
+        margin: 10,
+        padding: 10,
+        width: 300,
+        alignSelf: 'center',
+      },
+      modalStyle: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      modalContent: {
+        backgroundColor: 'white',
+        width: 200,
+        borderRadius: 5,
+      },
+      touchableOpacityStyle: {
+        borderWidth: 1,
+        borderColor: 'gray',
+        borderRadius: 5,
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+      },
+     profileTextStyle: {
+        fontWeight: 'bold',
+        fontSize: 16,
+        marginBottom: 5,
+       // alignSelf: 'center',
+      }
+      
+      
 
+}) 
 
 
 export default GlobalStyles
