@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, Button } from 'react-native';
 import { getFirestore, doc, getDoc, collection, getDocs } from "firebase/firestore";
+import GlobalStyles from "../../GlobalStyles";
 
 function FilterLocation() {
     const [data, setData] = useState([]);
