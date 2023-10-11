@@ -1,7 +1,7 @@
 // Denne komponent skal oprette en bruger
 
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { View, Text, TextInput, Button } from "react-native";
 
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
@@ -9,6 +9,8 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 import { firebaseConfig } from "../../FirebaseConfig";
+
+import GlobalStyles from "../../GlobalStyles";
 
 // Initialize Firebase og firestore
 const app = initializeApp(firebaseConfig);
@@ -58,45 +60,30 @@ function SignUpForm() {
 
   return (
     <View>
-      <Text style={styles.header}>Sign up</Text>
+      <Text style={GlobalStyles.header}>Sign up</Text>
       <TextInput
         placeholder="Name"
         value={name}
         onChangeText={(name) => setName(name)}
-        style={styles.inputField}
+        style={GlobalStyles.inputField}
       />
       <TextInput
         placeholder="Email"
         value={email}
         onChangeText={(email) => setEmail(email)}
-        style={styles.inputField}
+        style={GlobalStyles.inputField}
       />
       <TextInput
         placeholder="password"
         value={password}
         onChangeText={(password) => setPassword(password)}
         secureTextEntry
-        style={styles.inputField}
+        style={GlobalStyles.inputField}
       />
-      {errorMessage && <Text style={styles.error}>Error: {errorMessage}</Text>}
+      {errorMessage && <Text style={GlobalStyles.error}>Error: {errorMessage}</Text>}
       {renderButton()}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  error: {
-    color: "red",
-  },
-  inputField: {
-    borderWidth: 1,
-    margin: 10,
-    padding: 10,
-    width: 300,
-  },
-  header: {
-    fontSize: 40,
-  },
-});
 
 export default SignUpForm;
