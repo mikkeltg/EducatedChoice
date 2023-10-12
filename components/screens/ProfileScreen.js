@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, Button, Pressable } from "react-native";
 import { initializeApp } from "firebase/app";
 import { getAuth, signOut } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
+import GlobalStyles from "../../GlobalStyles";
 
 function ProfileScreen() {
   const auth = getAuth();
@@ -60,10 +61,12 @@ function ProfileScreen() {
   // Metoden returnerer mailadressen af den aktive bruger.
   // Mailadressen udskrives ved brug af en tekstkomponent.
   return (
-    <View style={styles.container}>
-      <Text>Current user: {user.email}</Text>
+   // <View style={GlobalStyles.backgroundColor}>
+    <View style={GlobalStyles.textContainer}>
       {profileInfo && (
         <View>
+          <Text style={GlobalStyles.header}>Profile information</Text>
+          <Text>Email: {profileInfo.email || "Not available"}</Text>
           <Text>Name: {profileInfo.navn || "Not available"}</Text>
           <Text>Snit: {profileInfo.snit || "Not available"}</Text>
           <Text>
@@ -75,20 +78,13 @@ function ProfileScreen() {
           </Text>
         </View>
       )}
-      <Button onPress={() => handleLogOut()} title="Log out" />
+      <Pressable style={GlobalStyles.button} onPress={() => handleLogOut()}>
+      <Text style={GlobalStyles.buttonText}>{title='Log out'}</Text>
+      </Pressable>
     </View>
+    //</View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    paddingTop: "5%",
-    backgroundColor: "#ecf0f1",
-    padding: 8,
-  },
-});
 
 //Eksport af Loginform, således denne kan importeres og benyttes i andre komponenter
 export default ProfileScreen;

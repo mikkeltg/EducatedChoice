@@ -1,35 +1,25 @@
 // Denne komponent skal give brugeren valget mellem at logge ind eller at oprette en bruger
 
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { Button } from 'react-native-elements';
+import GlobalStyles from '../../GlobalStyles';
 
-const WelcomeScreen = ({ navigation }) => {
+const WelcomeScreen = ({navigation}) => {
   return (
-    <View style={styles.container}>
+    <View style={GlobalStyles.container}>
       <Button
         title="Sign Up"
         onPress={() => navigation.navigate('SignUp')}
-        containerStyle={styles.buttonContainer}
+        containerStyle={GlobalStyles.buttonContainer}
       />
       <Button
         title="Sign In"
         onPress={() => navigation.navigate('SignIn')}
-        containerStyle={styles.buttonContainer}
+        containerStyle={GlobalStyles.buttonContainer}
       />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonContainer: {
-    margin: 10,
-  },
-});
 
 export default WelcomeScreen;

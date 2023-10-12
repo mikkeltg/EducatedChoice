@@ -7,10 +7,10 @@ import {
     View,
     TextInput,
     ActivityIndicator,
-    StyleSheet,
 } from 'react-native';
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import GlobalStyles from '../../GlobalStyles';
 
 
 function LoginForm() {
@@ -46,43 +46,28 @@ function LoginForm() {
     // Selve komponenten med loginfelter og knap returneres
     return (
         <View>
-            <Text style={styles.header}>Login</Text>
+            <Text style={GlobalStyles.header}>Login</Text>
             <TextInput
                 placeholder="email"
                 value={email}
                 onChangeText={(email) => setEmail(email)}
-                style={styles.inputField}
+                style={GlobalStyles.inputField}
             />
             <TextInput
                 placeholder="password"
                 value={password}
                 onChangeText={(password) => setPassword(password) }
                 secureTextEntry
-                style={styles.inputField}
+                style={GlobalStyles.inputField}
             />
             {errorMessage && (
-                <Text style={styles.error}>Error: {errorMessage}</Text>
+                <Text style={GlobalStyles.error}>Error: {errorMessage}</Text>
             )}
             {renderButton()}
         </View>
     );
 }
 
-// Styling af komponent
-const styles = StyleSheet.create({
-    error: {
-        color: 'red',
-    },
-    inputField: {
-        borderWidth: 1,
-        margin: 10,
-        padding: 10,
-        width: 300
-    },
-    header: {
-        fontSize: 40,
-    },
-});
 
 //Eksport af Loginform, således denne kan importeres og benyttes i andre komponenter
 export default LoginForm
