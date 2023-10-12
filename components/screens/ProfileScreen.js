@@ -47,6 +47,22 @@ function ProfileScreen() {
       });
   };
 
+  const checkForUpdates = async () => {
+    const db = getFirestore();
+    const userDocRef = doc(db, "users", user.uid);
+
+    try {
+      const docSnap = await getDoc(userDocRef);
+      if (docSnap.exists()) {
+        setProfileInfo(docSnap.data());
+      } else {
+        console.log("Profile not found in Firestore");
+      }
+    } catch (error) {
+      console.error("Error checking for updates:", error);
+    }
+  };
+
   //Hvis der af en eller anden grund ikke skulle være muligt at fremfinde den aktive bruger,
   //skal der udprintes en besked om dette igennem en tekstkomponent
   if (!auth.currentUser) {
@@ -72,13 +88,17 @@ function ProfileScreen() {
           <Text style={GlobalStyles.profileTextStyle}>Ønsket lokation: {profileInfo.location || "Not available"}</Text>
         </View>
       )}
-      <Pressable style={GlobalStyles.button} onPress={() => handleLogOut()}>
-      <Text style={GlobalStyles.buttonText}>{title='Log out'}</Text>
+      <Pressable style={GlobalStyles.button} onPress={() => checkForUpdates()}>
+      <Text style={GlobalStyles.buttonText}>{title='Opdatér'}</Text>
       </Pressable>
+
+      <Pressable style={GlobalStyles.button} onPress={() => handleLogOut()}>
+      <Text style={GlobalStyles.buttonText}>{title='Log ud'}</Text>
+      </Pressable>
+
     </View>
     //</View>
   );
 }
 
-//Eksport af Loginform, således denne kan importeres og benyttes i andre komponenter
 export default ProfileScreen;

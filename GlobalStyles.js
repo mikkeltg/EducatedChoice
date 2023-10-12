@@ -99,6 +99,13 @@ const GlobalStyles = StyleSheet.create
         color: '#40798C',
     },
 
+    headerL: {
+      fontSize: 30,
+      textAlign: 'center',
+      marginTop: 10,
+      color: '#40798C',
+  },
+
     error: {
         color: 'red',
     },
@@ -151,11 +158,65 @@ const GlobalStyles = StyleSheet.create
         fontSize: 16,
         marginBottom: 5,
        // alignSelf: 'center',
-      }
-      
-      
-
-}) 
+      },
+      containerL: {
+        flex: 1,
+        padding: 20,
+        backgroundColor: "#f5f5f5",
+      },
+      textL: {
+        fontSize: 16,
+        marginBottom: 10,
+      },
+      documentContainerL: {
+        backgroundColor: 'white',
+        borderWidth: 1,
+        borderColor: '#ccc',
+        padding: 10,
+        marginBottom: 10,
+        borderRadius: 5,
+      },
+      modalContainerL: {
+        flex: 1,
+        backgroundColor: 'white',
+        paddingHorizontal: 20,
+      },
+      modalTitleL: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        marginTop: 50,
+        textAlign: 'center',
+      },
+      locationItemL: {
+        padding: 10,
+        borderBottomWidth: 1,
+        borderColor: '#ccc',
+      },
+      locationItemTextL: {
+        fontSize: 16,
+      },
+      dropdownContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        backgroundColor: '#f2f2f2',
+        padding: 10,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        marginBottom: 10,
+      },
+      dropdownInput: {
+        flex: 1,
+        fontSize: 16,
+      },
+      dropdownArrow: {
+        fontSize: 16,
+        marginLeft: 10,
+        color: '#333',
+      },   
+});
 
 
 export default GlobalStyles
