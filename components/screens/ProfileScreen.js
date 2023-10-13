@@ -67,7 +67,7 @@ function ProfileScreen() {
         <View>
           <Text style={GlobalStyles.header}>Profile information</Text>
           <Text>Email: {profileInfo.email || "Not available"}</Text>
-          <Text>Name: {profileInfo.navn || "Not available"}</Text>
+          <Text>Name: {profileInfo.name || "Not available"}</Text>
           <Text>Snit: {profileInfo.snit || "Not available"}</Text>
           <Text>
             Ønsket lokation: {profileInfo["ønsket lokation"] || "Not available"}
