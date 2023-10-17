@@ -5,6 +5,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import ProfileScreen from "./screens/ProfileScreen";
 import FilterLocation from "./screens/FilterLocation";
+import FeedbackForm from "./screens/FeedbackForm";
+import FeedbackList from "./screens/FeedbackList";
 
 const Drawer = createDrawerNavigator();
 
@@ -14,6 +16,8 @@ function Navigator() {
       <Drawer.Navigator initialRouteName="Welcome">
         <Drawer.Screen name="Profile" component={ProfileScreen} />
         <Drawer.Screen name="Filter" component={FilterLocation} />
+        <Drawer.Screen name="Feedback" component={FeedbackForm} />
+        <Drawer.Screen name="FeedbackList" component={FeedbackList} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
