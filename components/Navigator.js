@@ -5,6 +5,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import ProfileScreen from "./screens/ProfileScreen";
 import FilterLocation from "./screens/FilterLocation";
+import FilterEducationType from "./screens/FilterEducationType";
+import EducationInformationScreen from "./screens/EducationInfoScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -14,6 +16,10 @@ function Navigator() {
       <Drawer.Navigator initialRouteName="Welcome">
         <Drawer.Screen name="Profile" component={ProfileScreen} />
         <Drawer.Screen name="Filter" component={FilterLocation} />
+        <Drawer.Screen name="Filtrér efter uddannelsestype" component={FilterEducationType} />
+        <Drawer.Screen name="Uddannelsesdetaljer" component={EducationInformationScreen} options={{
+                  drawerItemStyle: { display: 'none' } // Skjul detaljeside
+        }}/>
       </Drawer.Navigator>
     </NavigationContainer>
   );
