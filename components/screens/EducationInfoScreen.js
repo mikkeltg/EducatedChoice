@@ -1,12 +1,10 @@
+// Denne komponent skal indhente uddannelsesdetaljer fra Firestore databasen og fremvise dem til brugeren
+
+// Nødvendige pakker hentes
 import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
-  Button,
-  Modal,
-  TouchableOpacity,
-  FlatList,
-  Pressable,
   ScrollView
 } from "react-native";
 import {
@@ -18,12 +16,11 @@ import {
 } from "firebase/firestore";
 import GlobalStyles from "../../GlobalStyles";
 
-
+// Selve komponenten, der eksporteres til App.js
 function EducationInformationScreen(props) {
-  const params = props.route.params;
+  const params = props.route.params; // Argumenterne/parametrene i form af et uddannelsesnavn givet af brugeren i FilterEducationType.js
   const educationName = params.educationName; // Få navn på uddannelse fra navigation route parameters
-  console.log("Education name from params: ", educationName);
-  const [educationInformation, setEducationInformation] = useState(null);
+  const [educationInformation, setEducationInformation] = useState(null); // usestate, hvori de senere indhentede uddannelsesdetaljer gemmes
 
 
     // Funktion der henter information om den enkelte uddannelse
@@ -38,11 +35,11 @@ function EducationInformationScreen(props) {
         );
         const querySnapshot = await getDocs(q);
 
-        const newData = [];
+        const newData = []; // Array, hvori uddannelesdetaljer midlertidigt gemmes
         querySnapshot.forEach((doc) => {
-          newData.push(doc.data());
+          newData.push(doc.data()); 
         });
-        setEducationInformation(newData[0]); // indsæt uddannelsesinformation ind i usestate mph. at vise dette til brugeren
+        setEducationInformation(newData[0]); // indsæt uddannelsesinformation fra midlertidigt array ind i usestate variabel mph. at tilgå disse senere
         
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -66,9 +63,8 @@ function EducationInformationScreen(props) {
     );
   }
 
-  //I return() udnyttes en prædefineret metode, som firebase stiller til rådighed.
-  // Metoden returnerer mailadressen af den aktive bruger.
-  // Mailadressen udskrives ved brug af en tekstkomponent.
+  // Nedenstående kode viser brugeren uddannelsesdetaljer indhentet fra funktionen fetchEducationInformation og som er gemt i usestate educationInformation.
+  // Der vises hhv. uddannelsesnavnet, beskrivelse, byer, hvori uddannelsen findes, de enkelte uddannelser i disse byer, samt adgangskvotienter for disse universiteter. 
   return (
     
     <View>
@@ -80,7 +76,7 @@ function EducationInformationScreen(props) {
                 margin:"5%"
                 }
               }>
-              <Text>Beskrivelse: {educationInformation.Beskrivelse || "Beskrivelse kunne ikke findes."}</Text>
+              <Text>{educationInformation.Beskrivelse || "Beskrivelse kunne ikke findes."}</Text>
               <View>
                 {educationInformation["Lokationer"] && (Object.keys(educationInformation["Lokationer"]).map((cityName, cityIndex) => {
                   const areaSpecificEducationInformation = educationInformation["Lokationer"][cityName]; // Få informationer fra den enkelte by
@@ -100,8 +96,8 @@ function EducationInformationScreen(props) {
                         color: '#40798C',
                         }
                       }>{cityName || "By kunne ikke findes."}</Text>
-                      {Object.keys(areaSpecificEducationInformation).map((universityName, uniIndex) => {
-                        const universityInfo = areaSpecificEducationInformation[universityName];
+                      {Object.keys(areaSpecificEducationInformation).map((universityName, uniIndex) => { 
+                        const universityInfo = areaSpecificEducationInformation[universityName]; // Få informationer fra det enkelte universitet
                         console.log("University info: ", universityInfo);
                         return (
                           <View key={uniIndex} style={GlobalStyles.documentContainerL}>
@@ -121,5 +117,5 @@ function EducationInformationScreen(props) {
 );
 }
 
-//Eksport af Loginform, således denne kan importeres og benyttes i andre komponenter
+//Eksport af EducationInformationScreen, således denne kan importeres og benyttes i andre komponenter
 export default EducationInformationScreen;
