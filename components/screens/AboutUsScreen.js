@@ -13,6 +13,8 @@ const AboutUsScreen = () => {
   );
 };
 
+//TILFØJET STYLING JF. FEEDBACK 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

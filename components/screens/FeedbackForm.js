@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Image } from "react-native"; // Tilføj "TouchableOpacity" her
-import { Picker } from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker'; //anvendes til dropdown menu
 import { getFirestore, collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 import * as ImagePicker from 'expo-image-picker'; // gør det muligt at vælge et billede fra telefonens galleri
 
 function FeedbackForm() { //anmeldelsesformular til uddannelser
-  const [selectedUddannelse, setSelectedUddannelse] = useState(""); //vælg uddannelse fra dropdown menu
-  const [feedback, setFeedback] = useState(""); //skriv anmeldelse af uddannelse i tekstfelt 
-  const [uddannelser, setUddannelser] = useState([]); 
+  const [selectedUddannelse, setSelectedUddannelse] = useState(""); //opretter en state til den valgte uddannelse så den kan koble sig til den valgte uddannelse i dropdown menuen
+  const [feedback, setFeedback] = useState(""); //opretter en state til anmeldelsen af uddannelsen så den kan gemmes i databasen
+  const [uddannelser, setUddannelser] = useState([]); //opretter en state til uddannelserne så de kan hentes fra databasen
   const auth = getAuth(); //hent brugerens id fra firebase authentication så vi kan gemme det i databasen sammen med anmeldelsen
 
   useEffect(() => { //hent uddannelser fra databasen
@@ -26,15 +26,15 @@ function FeedbackForm() { //anmeldelsesformular til uddannelser
   }, );
 
   const submitFeedback = async () => { //når brugeren trykker på "Indsend anmeldelse" skal anmeldelsen gemmes i databasen
-    if (selectedUddannelse && feedback) { 
+    if (selectedUddannelse && feedback) { //hvis der er valgt en uddannelse og skrevet en anmeldelse, skal anmeldelsen gemmes i databasen
       const db = getFirestore();
       const feedbackCollection = collection(db, "Feedback"); //opret en collection i databasen til anmeldelser og gem den i "feedbackCollection"
 
       try {
         await addDoc(feedbackCollection, { //tilføj en ny anmeldelse til databasen med følgende informationer
-          userId: auth.currentUser.uid,
-          uddannelse: selectedUddannelse,
-          feedback: feedback,
+          userId: auth.currentUser.uid, //gem brugerens id fra firebase authentication
+          uddannelse: selectedUddannelse,//gem den valgte uddannelse fra dropdown menuen
+          feedback: feedback, //gem anmeldelsen af uddannelsen
         });
         setSelectedUddannelse("");
         setFeedback(""); //når anmeldelsen er gemt i databasen skal dropdown menuen og tekstfeltet nulstilles
@@ -45,9 +45,9 @@ function FeedbackForm() { //anmeldelsesformular til uddannelser
     }
   };
 
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null); //opret en state til det valgte billede så det kan gemmes i databasen
 
-  const selectImage = async () => {
+  const selectImage = async () => { //async funktion til at vælge et billede fra telefonens galleri
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync(); //spørg om tilladelse til at få adgang til billedbiblioteket
      
     if (permissionResult.granted === false) { //hvis tilladelse ikke gives, vises en besked om at tilladelse er påkrævet
@@ -63,9 +63,9 @@ function FeedbackForm() { //anmeldelsesformular til uddannelser
     }
   };
 
-  const renderSelectedImage = () => {
-    if (selectedImage) {
-      return <Image source={selectedImage} style={styles.selectedImage} />;
+  const renderSelectedImage = () => { 
+    if (selectedImage) { //hvis der er valgt et billede, vises det valgte billede
+      return <Image source={selectedImage} style={styles.selectedImage} />; 
     }
     return null;
   };
@@ -75,23 +75,22 @@ function FeedbackForm() { //anmeldelsesformular til uddannelser
       <Text style={styles.header}>Vælg Uddannelse</Text>
       <Picker
         selectedValue={selectedUddannelse}
-        onValueChange={(itemValue, itemIndex) => setSelectedUddannelse(itemValue)}
+        onValueChange={(itemValue, itemIndex) => setSelectedUddannelse(itemValue)} //når der vælges en uddannelse, skal den gemmes i "selectedUddannelse"
         style={styles.picker}
       >
-        {uddannelser.map((uddannelse, index) => (
-          <Picker.Item key={index} label={uddannelse} value={uddannelse} />
+        {uddannelser.map((uddannelse, index) => ( //hent uddannelserne fra databasen og vis dem i dropdown menuen
+          <Picker.Item key={index} label={uddannelse} value={uddannelse} /> 
         ))}
       </Picker>
-      <Text style={styles.label}>Indtast anmeldelse</Text>
+      <Text style={styles.label}>Indtast anmeldelse</Text> 
       <TextInput
         style={styles.input}
         placeholder="Indtast din anmeldelse af uddannelsen her"
         value={feedback}
-        onChangeText={(text) => setFeedback(text)}
+        onChangeText={(text) => setFeedback(text)} //når der skrives i tekstfeltet, skal det gemmes i "feedback"
       />
-      <Button title="Indsend anmeldelse" onPress={submitFeedback} color="#CFD7C7" style={styles.button} />
-
-      <Text style={styles.label}>Vedhæft billede (valgfrit)</Text>
+      <Button title="Indsend anmeldelse" onPress={submitFeedback} color="#CFD7C7" style={styles.button} /> 
+      <Text style={styles.label}>Vedhæft billede (valgfrit)</Text> 
       <TouchableOpacity onPress={selectImage} style={styles.imagePickerButton}>
         <Text style={styles.imagePickerText}>Vælg billede</Text>
       </TouchableOpacity>
@@ -99,7 +98,7 @@ function FeedbackForm() { //anmeldelsesformular til uddannelser
     </View>
   );
 }
-
+//TILFØJET STYLING JF. FEEDBACK
 const styles = StyleSheet.create({
   container: {
     flex: 1,

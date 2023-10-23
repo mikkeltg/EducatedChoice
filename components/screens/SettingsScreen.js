@@ -3,6 +3,8 @@ import { Picker } from '@react-native-picker/picker';
 import { View, Text, Switch, TextInput, StyleSheet } from 'react-native';
 import PushNotification from 'react-native-push-notification';
 
+//her er der tilføjet mere funktionalitet, brugeren skal kunne slå notifikationer til og fra, slå darkmode til, taste et brugernavn, indstille skriftstørrelse, samt sprog
+
 const SettingsScreen = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
@@ -14,6 +16,7 @@ const SettingsScreen = () => {
     setIsDarkMode(!isDarkMode);
   };
 
+  //her er der brugt picker til at vælge skriftstørrelse og sprog, og der er brugt switch til at slå notifikationer og darkmode til og fra
   return (
     <View style={isDarkMode ? styles.darkContainer : styles.lightContainer}>
       <Text style={isDarkMode ? styles.darkHeader : styles.lightHeader}>Indstillinger</Text>
@@ -64,6 +67,8 @@ const SettingsScreen = () => {
     </View>
   );
 };
+
+////TILFØJET STYLING JF. FEEDBACK
 
 const styles = StyleSheet.create({
   lightContainer: {

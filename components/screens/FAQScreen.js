@@ -1,6 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 function FAQScreen() {
   const [faqs, setFaqs] = useState([]);
@@ -9,7 +15,7 @@ function FAQScreen() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const faqCollection = collection(db, 'oftestilledespørgsmål');
+      const faqCollection = collection(db, "oftestilledespørgsmål");
 
       try {
         const querySnapshot = await getDocs(faqCollection);
@@ -19,18 +25,20 @@ function FAQScreen() {
         });
         setFaqs(faqData);
       } catch (error) {
-        console.error('Fejl ved hentning af data:', error);
+        console.error("Fejl ved hentning af data:", error);
       }
     };
 
     fetchData();
   }, []);
-
+  //brugt touchable opacity i stedet for button, som viser svar på spørgsmål ved tryk på spørgsmål - synes det så bedre ud end at have en knap ved siden af spørgsmålet
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Ofte Stillede Spørgsmål</Text>
       <Text style={styles.description}>
-        Disse spørgsmål er de mest stillede spørgsmål omkring uddannelser. Hvis du ikke finder svar på dit spørgsmål, er du velkommen til at kontakte os. 
+        Disse spørgsmål er de mest stillede spørgsmål omkring uddannelser. Hvis
+        du ikke finder svar på dit spørgsmål, er du velkommen til at kontakte
+        os.
       </Text>
       <FlatList
         data={faqs}
@@ -43,7 +51,9 @@ function FAQScreen() {
             }}
           >
             <Text style={styles.buttonText}>{item.spørgsmål}</Text>
-            {selectedFAQ === item.id && <Text style={styles.answer}>Svar: {item.svar}</Text>}
+            {selectedFAQ === item.id && (
+              <Text style={styles.answer}>Svar: {item.svar}</Text>
+            )}
           </TouchableOpacity>
         )}
       />
@@ -51,6 +61,7 @@ function FAQScreen() {
   );
 }
 
+//TILFØJET STYLING JF. FEEDBACK
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -58,9 +69,9 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 16,
-    color: '#40798C',
+    color: "#40798C",
   },
   description: {
     fontSize: 16,
@@ -68,14 +79,14 @@ const styles = StyleSheet.create({
   },
   button: {
     marginBottom: 16,
-    backgroundColor: '#CFD7C7',
+    backgroundColor: "#CFD7C7",
     padding: 12,
     borderRadius: 8,
   },
   buttonText: {
     fontSize: 18,
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
   },
   answer: {
     fontSize: 16,
