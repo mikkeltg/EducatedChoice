@@ -5,6 +5,7 @@ import { getFirestore} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { collection, query, where, getDocs } from "firebase/firestore";
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 //viser hver enkelt udannelse der er hentet fra databasen
@@ -136,7 +137,7 @@ const FilterEducation = () => {
 
     return (
         <View>
-
+          <ScrollView>
             <Pressable style={GlobalStyles.button} mode="contained" onPress={getAllEducations}>
                 <Text style={GlobalStyles.text}>Hent Alle uddannelser</Text>
             </Pressable>
@@ -159,6 +160,7 @@ const FilterEducation = () => {
                 />
             }))
         }
+        </ScrollView>
         </View>
     );
 
