@@ -69,6 +69,17 @@ const GlobalStyles = StyleSheet.create
 
     },
 
+    TextInput: {
+        height: 40,
+        width: 300,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+        borderRadius: 5,
+        marginTop: 20,
+        alignItems: 'center',
+    },
+
     headlineText: {
         fontSize: 20,
         fontWeight: 'bold',
