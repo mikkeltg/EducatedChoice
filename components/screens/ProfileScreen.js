@@ -5,6 +5,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import GlobalStyles from "../../GlobalStyles";
 
+
 function ProfileScreen() {
   const auth = getAuth();
   const user = auth.currentUser;
