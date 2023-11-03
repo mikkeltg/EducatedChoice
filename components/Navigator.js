@@ -5,6 +5,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import ProfileScreen from "./screens/ProfileScreen";
 import FilterLocation from "./screens/FilterLocation";
+import SearchEducation from "./screens/SearchEducation";
+import MyFavourites from "./screens/MyFavourites";
+import LocationPreference from "./screens/LocationPreference";
 
 const Drawer = createDrawerNavigator();
 
@@ -13,7 +16,10 @@ function Navigator() {
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Welcome">
         <Drawer.Screen name="Profile" component={ProfileScreen} />
-        <Drawer.Screen name="Filter" component={FilterLocation} />
+        <Drawer.Screen name="Filter lokation" component={FilterLocation} />
+        <Drawer.Screen name="Søg" component={SearchEducation} />
+        <Drawer.Screen name="Mine favoritter" component={MyFavourites} />
+        <Drawer.Screen name="Præferencer" component={LocationPreference} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
