@@ -4,7 +4,7 @@ import { Picker } from '@react-native-picker/picker'; //anvendes til dropdown me
 import { getFirestore, collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
-import * as ImagePicker from 'expo-image-picker'; // gør det muligt at vælge et billede fra telefonens galleri
+//import * as ImagePicker from 'expo-image-picker'; // gør det muligt at vælge et billede fra telefonens galleri
 
 function FeedbackForm() { //anmeldelsesformular til uddannelser
   const [selectedUddannelse, setSelectedUddannelse] = useState(""); //opretter en state til den valgte uddannelse så den kan koble sig til den valgte uddannelse i dropdown menuen
@@ -45,9 +45,9 @@ function FeedbackForm() { //anmeldelsesformular til uddannelser
     }
   };
 
-  const [selectedImage, setSelectedImage] = useState(null); //opret en state til det valgte billede så det kan gemmes i databasen
+  // const [selectedImage, setSelectedImage] = useState(null); //opret en state til det valgte billede så det kan gemmes i databasen
 
-  const selectImage = async () => { //async funktion til at vælge et billede fra telefonens galleri
+  /*const selectImage = async () => { //async funktion til at vælge et billede fra telefonens galleri
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync(); //spørg om tilladelse til at få adgang til billedbiblioteket
      
     if (permissionResult.granted === false) { //hvis tilladelse ikke gives, vises en besked om at tilladelse er påkrævet
@@ -68,7 +68,7 @@ function FeedbackForm() { //anmeldelsesformular til uddannelser
       return <Image source={selectedImage} style={styles.selectedImage} />; 
     }
     return null;
-  };
+  }; */
 
   return (
     <View style={styles.container}>
