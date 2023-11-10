@@ -9,6 +9,9 @@ import Prereq from "./screens/Prereq";
 import FilterEducation from "./screens/FilterEducations";
 import FilterEducationType from "./screens/FilterEducationType";
 import EducationInformationScreen from "./screens/EducationInfoScreen";
+import MyFavourites from "./screens/MyFavourites";
+import LocationPreference from "./screens/LocationPreference";
+import SearchEducation from "./screens/SearchEducation";
 
 const Drawer = createDrawerNavigator();
 
@@ -24,6 +27,11 @@ function Navigator() {
         <Drawer.Screen name="Uddannelsesdetaljer" component={EducationInformationScreen} options={{
                   drawerItemStyle: { display: 'none' } // Skjul detaljeside
         }}/>
+        <Drawer.Screen name="Mine favoritter" component={MyFavourites} />
+        <Drawer.Screen name="Mine lokationspræferencer" component={LocationPreference} />
+        <Drawer.Screen name="Søg efter uddannelser" component={SearchEducation} />
+        
+
       </Drawer.Navigator>
     </NavigationContainer>
   );
