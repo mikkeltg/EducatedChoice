@@ -6,10 +6,19 @@ import { getAuth } from "firebase/auth";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { ScrollView } from 'react-native-gesture-handler';
-
+import { CheckBox } from 'react-native-elements';
+import Table from './Table.js'
 
 //viser hver enkelt udannelse der er hentet fra databasen
-function Education ({adgangskvotient, city, universityName, navn}) {
+function Education ({adgangskvotient, city, universityName, navn, addEducationToCompare}) {
+  const [checked, setChecked] = useState(false);
+  
+    function toggleChecked({navn, universityName, adgangskvotient}) {
+      setChecked(!checked); //sætter checked til det modsatte af hvad det er
+  
+      addEducationToCompare({navn, universityName, adgangskvotient, checked}) //tilføjer uddannelsen til listen over uddannelser der skal sammenlignes
+    }
+
 
     return (
         <View style= {GlobalStyles.textBox}>
@@ -17,12 +26,26 @@ function Education ({adgangskvotient, city, universityName, navn}) {
             <Text style={GlobalStyles.text}>By: {city}</Text>
             <Text style={GlobalStyles.text}>Universitet: {universityName}</Text>
             <Text style={GlobalStyles.text}>Adgangskvotient: {adgangskvotient}</Text>
-        </View>
-    );
+            <CheckBox
+              title="Sammenlign"
+              checked={checked}
+              onPress={() => toggleChecked({navn, universityName, adgangskvotient})}
+            />
+          </View>
+            );
     
 }
 
+
+
+
+
 const FilterEducation = () => {
+  const [educations, setEducations] = useState([])
+
+    useEffect(() => {
+      setEducations([])
+    }, []);
 
     //Her skal den hente min profils snit fra databasen
     const [mitSnit, setMitSnit] = useState(10); //nummer er sat til ingenting og ændres når der tastes på appen.
@@ -33,7 +56,9 @@ const FilterEducation = () => {
     const extracted = [];
 
     async function getMyEducations() { //henter uddannelser som brugeren kan søge ind på. 
-        setLoading(true);
+      setEducations([])  
+      setCompare(false)
+      setLoading(true);
         const auth = getAuth(); 
         const user = auth.currentUser;
 
@@ -49,7 +74,7 @@ const FilterEducation = () => {
         const q = query(collection(db, "Uddannelser")) //finder alle uddannelser i databasen
         
             const querySnapshot = await getDocs(q); //henter alle uddannelser i databasen
-           
+                
             try {
                 
                 querySnapshot.forEach((doc) => { //tager hver uddannelse og finder navn og lokation. 
@@ -78,7 +103,7 @@ const FilterEducation = () => {
                   
               setExtractedData(extracted) //sætter extractedData til at være listen over uddannelser brugeren kan søge ind på når forloopet er færdigt
                 setLoading(false);
-              console.log(extractedData)
+             
             } catch (error) {
                 console.error("Error extracting data:", error);
                 setLoading(false);
@@ -95,7 +120,9 @@ const FilterEducation = () => {
      }
 
     async function getAllEducations() { //henter alle uddannelser i databasen som ovenover undtagen den ikke sammenligner brugerens snit med adgangskvotienten
-        setLoading(true);
+      setEducations([])  
+      setCompare(false)
+      setLoading(true);
         const db = getFirestore();
         const q = query(collection(db, "Uddannelser"))
         
@@ -127,13 +154,36 @@ const FilterEducation = () => {
                   
               setExtractedData(extracted)
                 setLoading(false);
-              console.log(extractedData)
+            
             } catch (error) {
                 console.error("Error extracting data:", error);
                 setLoading(false);
             }
 }
 
+  const [compare, setCompare] = useState(false) //sætter compare til false som standard
+
+  function compareEducations () {
+    setExtractedData([]) //sætter extractedData til ingenting
+    setCompare(true) //sætter compare til true så tabellen vises
+    
+
+  }
+
+
+
+function addEducationToCompare({navn, universityName, adgangskvotient, checked}) {
+  if(checked === false ){ //hvis uddannelsen ikke er valgt til at blive sammenlignet tilføjes den til listen over uddannelser der skal sammenlignes
+  setEducations([...educations, {navn, universityName, adgangskvotient}])
+  } else { //hvis uddannelsen er valgt til at blive sammenlignet fjernes den fra listen over uddannelser der skal sammenlignes
+    const index = educations.findIndex((x) => x.navn === navn); //finder indexet for uddannelsen
+    const newEducations = [...educations];
+    newEducations.splice(index, 1); //fjerner uddannelsen fra listen
+    setEducations(newEducations);
+  
+  }
+  
+}
 
     return (
         <View>
@@ -144,6 +194,10 @@ const FilterEducation = () => {
 
             <Pressable style={GlobalStyles.button} mode="contained" onPress={getMyEducations}>
                 <Text style={GlobalStyles.text}>Hent uddannelser jeg kan komme ind på</Text>
+            </Pressable>
+
+            <Pressable style={GlobalStyles.button} mode="contained" onPress={compareEducations}>
+                <Text style={GlobalStyles.text}>Sammenlign valgte uddannelser</Text>
             </Pressable>
 
             {loading === true ? //hvis der loades skriver den loading ellers kommer data bare frem. 
@@ -157,9 +211,15 @@ const FilterEducation = () => {
                     city={education.city}
                     universityName={education.universityName}
                     navn={education.navn}
+                    addEducationToCompare={addEducationToCompare}
                 />
             }))
         }
+        {compare ? <Table data={educations} /> : null} 
+        {/* hvis compare er true vises tabellen ellers vises den ikke */}
+  
+     
+    
         </ScrollView>
         </View>
     );

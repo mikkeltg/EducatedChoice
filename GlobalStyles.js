@@ -226,7 +226,31 @@ const GlobalStyles = StyleSheet.create
         fontSize: 16,
         marginLeft: 10,
         color: '#333',
-      },   
+      },  
+      table: {
+        borderWidth: 1,
+      borderColor: '#000',
+      margin: 10,
+    },
+    header: {
+      flexDirection: 'row',
+      backgroundColor: '#f2f2f2',
+      padding: 10,
+    },
+    headerText: {
+      flex: 1,
+      fontWeight: 'bold',
+    },
+    row: {
+      flexDirection: 'row',
+      borderBottomWidth: 1,
+      borderBottomColor: '#ccc',
+      padding: 10,
+    },
+    cell: {
+      flex: 1,
+    },
+  
 });
 
 
