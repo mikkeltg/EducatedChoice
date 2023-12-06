@@ -5,6 +5,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import ProfileScreen from "./screens/ProfileScreen";
 import FilterLocation from "./screens/FilterLocation";
+import ChatScreen from "./screens/ChatScreen";
+
 
 const Drawer = createDrawerNavigator();
 
@@ -14,6 +16,8 @@ function Navigator() {
       <Drawer.Navigator initialRouteName="Welcome">
         <Drawer.Screen name="Profile" component={ProfileScreen} />
         <Drawer.Screen name="Filter" component={FilterLocation} />
+        <Drawer.Screen name="Chat" component={ChatScreen} />
+        
       </Drawer.Navigator>
     </NavigationContainer>
   );
