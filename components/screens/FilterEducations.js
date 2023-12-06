@@ -120,12 +120,24 @@ const FilterEducation = () => {
       setEducations([])  
       setCompare(false)
       setLoading(true);
+
+      try {
+        const auth = getAuth();
+        const userUID = auth.currentUser ? auth.currentUser.uid : null;
+
+        if (!userUID) {
+          //handle the case where the user is not authenticated
+          console.error("User not authenticated.");
+          setLoading(false);
+          return;
+      }
+
         const db = getFirestore();
         const q = query(collection(db, "Uddannelser"))
         
             const querySnapshot = await getDocs(q);
-           
-            try {
+
+            const extracted = [];
                 
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
@@ -137,17 +149,20 @@ const FilterEducation = () => {
                       const universityName = Object.keys(universityObject)[0];
                       const adgangskvotientObject = universityObject[universityName];
                       
-                      if (adgangskvotientObject && adgangskvotientObject.Adgangskvotient) {
-                        const adgangskvotient = adgangskvotientObject.Adgangskvotient;
-                        extracted.push({
-                          navn,
-                          city,
-                          universityName,
-                          adgangskvotient
-                        });
-                      }
-                    }
-                  });
+        // Check if the user's UID is in the "Fav" array
+        if (adgangskvotientObject && adgangskvotientObject.Fav && adgangskvotientObject.Fav.includes(userUID)) {
+          if (adgangskvotientObject.Adgangskvotient) {
+            const adgangskvotient = adgangskvotientObject.Adgangskvotient;
+            extracted.push({
+              navn,
+              city,
+              universityName,
+              adgangskvotient
+            });
+          }
+        }
+      }
+    });
                   
               setExtractedData(extracted)
                 setLoading(false);
@@ -186,7 +201,7 @@ function addEducationToCompare({navn, universityName, adgangskvotient, checked})
         <View>
           <ScrollView>
             <Pressable style={GlobalStyles.button} mode="contained" onPress={getAllEducations}>
-                <Text style={GlobalStyles.text}>Hent Alle uddannelser</Text>
+                <Text style={GlobalStyles.text}>Hent favoritter</Text>
             </Pressable>
 
             <Pressable style={GlobalStyles.button} mode="contained" onPress={getMyEducations}>
