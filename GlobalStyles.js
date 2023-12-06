@@ -52,7 +52,7 @@ const GlobalStyles = StyleSheet.create
         paddingHorizontal: 22,
         elevation: 3,
         justifyContent: 'center',
-        marginTop: 20,
+        margin: 20,
     },
 
     buttonText: {
@@ -211,11 +211,23 @@ const GlobalStyles = StyleSheet.create
         backgroundColor: 'white',
         paddingHorizontal: 20,
       },
+      containerGap: {
+        flex: 1,
+        backgroundColor: 'white',
+        gap: 15
+      },
       modalContainerLHorizontal: {
         flexDirection: "row",
         backgroundColor: 'white',
-        alignContent: "center",
         justifyContent: "space-around",
+        gap: 15
+      },
+      modalTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 15,
+        marginTop: 20,
+        textAlign: 'center',
       },
       modalTitleL: {
         fontSize: 20,
