@@ -21,8 +21,8 @@ function Navigator() {
         <Drawer.Screen name="Profile" component={ProfileScreen} />
         <Drawer.Screen name="Filter" component={FilterLocation} />
         <Drawer.Screen name="Prereq" component={Prereq} />
-        <Drawer.Screen name="Filter Uddannelser" component={FilterEducation}/>
-        <Drawer.Screen name="Filtrér efter uddannelsestype" component={FilterEducationType} />
+        <Drawer.Screen name="BRUG IKKE!! Filter Uddannelser" component={FilterEducation}/>
+        <Drawer.Screen name="Brug den her: Filtrér efter uddannelsestype" component={FilterEducationType} />
         <Drawer.Screen name="Uddannelsesdetaljer" component={EducationInformationScreen} options={{
                   drawerItemStyle: { display: 'none' } // Skjul detaljeside
         }}/>

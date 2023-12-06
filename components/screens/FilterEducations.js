@@ -37,9 +37,6 @@ function Education ({adgangskvotient, city, universityName, navn, addEducationTo
 }
 
 
-
-
-
 const FilterEducation = () => {
   const [educations, setEducations] = useState([])
 
