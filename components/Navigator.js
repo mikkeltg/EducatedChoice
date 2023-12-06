@@ -11,6 +11,7 @@ import EducationInformationScreen from "./screens/EducationInfoScreen";
 import MyFavourites from "./screens/MyFavourites";
 import LocationPreference from "./screens/LocationPreference";
 import SearchEducation from "./screens/SearchEducation";
+import Educations from "./screens/Educations";
 
 const Drawer = createDrawerNavigator();
 
@@ -21,6 +22,7 @@ function Navigator() {
         <Drawer.Screen name="Profile" component={ProfileScreen} />
         <Drawer.Screen name="Filter" component={FilterLocation} />
         <Drawer.Screen name="Prereq" component={Prereq} />
+        <Drawer.Screen name="Filtrér Uddannelser" component={Educations}/>
         <Drawer.Screen name="Filter Uddannelser" component={FilterEducation}/>
         <Drawer.Screen name="Filtrér efter uddannelsestype" component={FilterEducationType} />
         <Drawer.Screen name="Uddannelsesdetaljer" component={EducationInformationScreen} options={{
