@@ -19,6 +19,7 @@ import SignUpForm from "./components/login/SignUpForm";
 import WelcomeScreen from "./components/login/WelcomeScreen";
 import Navigator from "./components/Navigator";
 
+
 import { firebaseConfig } from "./FirebaseConfig";
 
 const Stack = createStackNavigator();

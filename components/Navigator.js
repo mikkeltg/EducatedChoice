@@ -11,6 +11,8 @@ import EducationInformationScreen from "./screens/EducationInfoScreen";
 import MyFavourites from "./screens/MyFavourites";
 import LocationPreference from "./screens/LocationPreference";
 import SearchEducation from "./screens/SearchEducation";
+import ChatScreen from "./screens/ChatScreen";
+
 
 const Drawer = createDrawerNavigator();
 
@@ -31,6 +33,8 @@ function Navigator() {
         <Drawer.Screen name="Søg efter uddannelser" component={SearchEducation} />
         
 
+        <Drawer.Screen name="Chat" component={ChatScreen} />
+        
       </Drawer.Navigator>
     </NavigationContainer>
   );
