@@ -5,6 +5,7 @@ import { FontAwesome } from '@expo/vector-icons';
 
 import SendMessage from '../services/RequestPage';
 import ChatFaceData from '../services/ChatFaceData';
+import { CHATMESSAGES } from '../services/const';
 
 let CHAT_BOT_FACE = 'https://res.cloudinary.com/dknvsbuyy/image/upload/v1685678135/chat_1_c7eda483e3.png';
 
@@ -72,7 +73,7 @@ export default function ChatScreen() {
   };
   
 
-  const onSend = useCallback(async (messages = []) => {
+  const onSend = useCallback(async (messages = []) => { //når brugeren sender en besked
     setMessages(previousMessages => GiftedChat.append(previousMessages, messages));
 
     if (messages[0].text) {
@@ -152,5 +153,4 @@ export default function ChatScreen() {
     </View>
   );
 }
-
 

@@ -1,8 +1,17 @@
 //Sample import fra https://rapidapi.com/rphrp1985/api/open-ai21
 // Hunsk at insætte den sample de giver in i en function som jeg har gjort i lijne 5, dernæst ændre content: "hello" til en variable (message her), Husk også at addere en return response
 import axios from "axios";
+import { CHATMESSAGES } from "./const";
 
-export default async function SendMessage(message) {
+export default async function SendMessage(message) { //kun en bruger kan sende en besked 
+  //pusher brugerens besked til CHATMESSAGES array
+  const toChatMessagesUSER = {
+    role: 'user',
+    content: message
+  }
+  CHATMESSAGES.push(toChatMessagesUSER);
+
+  //DEFINERE VORES OPTIONS TIL API KALD
   const options = {
     method: 'POST',
     url: 'https://open-ai21.p.rapidapi.com/conversationgpt35',
@@ -12,20 +21,22 @@ export default async function SendMessage(message) {
       'X-RapidAPI-Host': 'open-ai21.p.rapidapi.com',
     },
     data: {
-      messages: [
-        {
-          role: "user",
-          content: message,
-        },
-      ],
+      messages: CHATMESSAGES, //HER SENDER VI VORES CHATMESSAGES ARRAY MED ALLE SPØRGSMÅL OG SVAR
       web_access: false,
       stream: false,
     },
   };
 
   try {
-    const response = await axios.request(options);
+    const response = await axios.request(options); //HER SENDER VI REQUEST AFSTED TIL API'EN
     console.log(response.data);
+    //pusher AI svaret fra api'en til CHATMESSAGES array
+    const toChatMessages = {
+      role: 'assistant',
+      content: response
+    }
+    CHATMESSAGES.push(toChatMessages); //opdatere vores CHATMESSAGES array med den nye besked
+    //returner svar til brugeren
     return response
   } catch (error) {
     console.error('API Request Error:', error.message);
