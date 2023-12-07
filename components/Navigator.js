@@ -12,15 +12,18 @@ import MyFavourites from "./screens/MyFavourites";
 import LocationPreference from "./screens/LocationPreference";
 import SearchEducation from "./screens/SearchEducation";
 import ChatScreen from "./screens/ChatScreen";
+import Educations from "./screens/Educations";
 
 
 const Drawer = createDrawerNavigator();
 
 function Navigator() {
+  
   return (
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Welcome">
         <Drawer.Screen name="Profile" component={ProfileScreen} />
+        <Drawer.Screen name="Uddannelser" component={Educations} />
         <Drawer.Screen name="Filter" component={FilterLocation} />
         <Drawer.Screen name="Prereq" component={Prereq} />
         <Drawer.Screen name="BRUG IKKE!! Filter Uddannelser" component={FilterEducation}/>
