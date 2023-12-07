@@ -61,19 +61,13 @@ function FilterEducationType({ navigation }) {
       const entryReqGrades = [];
       let eligbleCity = false
       for (let city in data[i]["Lokationer"]){
-        console.log(selectedLocation);
-        console.log(city);
         data[i]["Lokationer"][city.trim()] = data[i]["Lokationer"][city];
         city = city.trim(); // fjern evt. ekstra mellemrum
         if (typeof selectedLocation != "undefined" && selectedLocation != city) {
-          console.log("ikke match på by");
         } else {
-          console.log("match på by");
           eligbleCity = true;
-          console.log(data[i]["Lokationer"][city]);
           
           for (const university in data[i]["Lokationer"][city]){
-            console.log(university);
             if (data[i]["Lokationer"][city][university]["Adgangskvotient"] == "AO") {
               data[i]["Lokationer"][city][university]["Adgangskvotient"] = 0;
             }
@@ -82,17 +76,10 @@ function FilterEducationType({ navigation }) {
           }
       }
       entryReqGrades.sort((a, b) => a - b); // Sorter med laveste først
-      console.log(data[i]);
-      console.log(entryReqGrades);
-      console.log(selectedAverage);
-      console.log("Average: ", selectedAverage > entryReqGrades[0]);
-      console.log("City: ", !eligbleCity);
       if (!eligbleCity) {
-        console.log("ikke match på nogen byer");
         educationEligibility = false;
       }
       if (selectedAverage < entryReqGrades[0]) {
-        console.log("ikke match på karaktergennemsnit");
         educationEligibility = false;
       }
 
@@ -140,7 +127,6 @@ function FilterEducationType({ navigation }) {
         const userDocRef = doc(db, "users", user.uid); //finder den bruger der er logget ind.
         const docSnap = await getDoc(userDocRef); //henter brugerens data fra databasen
         setUserAverage(docSnap.data().snit);
-        console.log(userAverage);
     } catch (error) {
     console.error("Error fetching grade average:", error);
     }
@@ -152,7 +138,6 @@ useEffect(()=>{
   // Funktion der sætter filter på adgangskvotient lig med brugerens eget gennemsnit 
 const useUsersOwnAverage = async () => { 
         setSelectedAverage(userAverage);
-        console.log(selectedAverage);
 };
 
   // Funktion der enten viser eller skjuler dropdown muligheder ved tryk på dropdown baren
