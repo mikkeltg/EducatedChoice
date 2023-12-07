@@ -81,7 +81,7 @@ function ProfileScreen() {
     <View style={GlobalStyles.textContainer}>
       {profileInfo && (
         <View>
-          <Text style={GlobalStyles.header}>Profile information</Text>
+          <Text style={GlobalStyles.headerL}>Profile information</Text>
           <Text style={GlobalStyles.profileTextStyle}>Email: {profileInfo.email || "Not available"}</Text>
           <Text style={GlobalStyles.profileTextStyle}>Name: {profileInfo.name || "Not available"}</Text>
           <Text style={GlobalStyles.profileTextStyle}>Snit: {profileInfo.snit || "Not available"}</Text>

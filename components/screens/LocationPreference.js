@@ -60,7 +60,7 @@ const LocationPreference = () => {
 
   return (
     <View>
-      <Text style={GlobalStyles.header}>Opdatér Præferencer</Text>
+      <Text style={GlobalStyles.headerL}>Opdatér Præferencer</Text>
         <Text style={GlobalStyles.text}>Hvilken by vil du gerne studere i?</Text>
       <TextInput
         placeholder="By"

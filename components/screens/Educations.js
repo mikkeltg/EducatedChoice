@@ -266,7 +266,7 @@ const useUsersOwnAverage = async () => {
         setSelectedEducationType("");
         setSelectedLocation();
       }}> 
-        <Text>Clear Filter</Text>
+        <Text style={GlobalStyles.buttonText}>Clear Filter</Text>
       </Pressable>
     </ScrollView>
     </SafeAreaView>

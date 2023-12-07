@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, AsyncStorage } from 'react-native';
+import { View, SafeAreaView, AsyncStorage } from 'react-native';
 import { Bubble, GiftedChat, InputToolbar, Send } from 'react-native-gifted-chat';
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -137,7 +137,7 @@ export default function ChatScreen() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#fff' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <GiftedChat
         messages={messages}
         isTyping={loading}
@@ -150,7 +150,7 @@ export default function ChatScreen() {
         renderInputToolbar={renderInputToolbar}
         renderSend={renderSend}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 

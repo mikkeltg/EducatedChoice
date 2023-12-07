@@ -44,15 +44,17 @@ const GlobalStyles = StyleSheet.create
         // marginTop: 20,
     },
     button: {
+        display: "flex",
         backgroundColor: '#CFD7C7',
         padding: 10,
         borderRadius: 4,
         alignItems: 'center',
-        paddingVertical: 9,
-        paddingHorizontal: 22,
-        elevation: 3,
+        // paddingVertical: 9,
+        // paddingHorizontal: 22,
+        // elevation: 3,
         justifyContent: 'center',
         margin: 20,
+        
     },
 
     buttonText: {
@@ -61,8 +63,8 @@ const GlobalStyles = StyleSheet.create
         fontSize: 16,
         lineHeight: 18,
         letterSpacing: 0.25,
-        justifyContent: 'center',
-
+        alignSelf: "center",
+        padding: 20
     },
 
     buttonContainer: {
