@@ -157,7 +157,7 @@ function EducationInformationScreen(props) {
                             <Text>Adgangskvotient: {universityInfo["Adgangskvotient"] || "Adgangskvotient kunne ikke findes."}</Text>
                           </View>
                           <TouchableOpacity onPress={() => handleFavButtonClick(cityName, universityName)}>
-                            <Text>{isCurrentUserFav ? '❤️' : '🤍'}</Text>
+                            <Text>{isCurrentUserFav ? '❤️' : '🤍'} {universityInfo["Fav"] ? universityInfo["Fav"].length : 0}</Text>
                           </TouchableOpacity>
                         </View>
                       </View>
