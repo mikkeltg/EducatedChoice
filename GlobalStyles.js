@@ -32,7 +32,17 @@ const GlobalStyles = StyleSheet.create
         alignItems: 'center',
         height: 100,
     },
-   
+    smallButton: {
+        backgroundColor: '#CFD7C7',
+        padding: 10,
+        borderRadius: 4,
+        alignItems: 'center',
+        // paddingVertical: 9,
+        // paddingHorizontal: 22,
+        // elevation: 3,
+        justifyContent: 'center',
+        // marginTop: 20,
+    },
     button: {
         backgroundColor: '#CFD7C7',
         padding: 10,
@@ -42,7 +52,7 @@ const GlobalStyles = StyleSheet.create
         paddingHorizontal: 22,
         elevation: 3,
         justifyContent: 'center',
-        marginTop: 20,
+        margin: 20,
     },
 
     buttonText: {
@@ -79,7 +89,16 @@ const GlobalStyles = StyleSheet.create
         marginTop: 20,
         alignItems: 'center',
     },
-
+    numberInput: {
+      alignSelf: "center",
+      height: 40,
+      width: "30 %",
+      borderColor: 'gray',
+      borderWidth: 1,
+      paddingHorizontal: 10,
+      fontSize: 16,
+      borderRadius: 5,
+    },
     headlineText: {
         fontSize: 20,
         fontWeight: 'bold',
@@ -191,6 +210,24 @@ const GlobalStyles = StyleSheet.create
         flex: 1,
         backgroundColor: 'white',
         paddingHorizontal: 20,
+      },
+      containerGap: {
+        flex: 1,
+        backgroundColor: 'white',
+        gap: 15
+      },
+      modalContainerLHorizontal: {
+        flexDirection: "row",
+        backgroundColor: 'white',
+        justifyContent: "space-around",
+        gap: 15
+      },
+      modalTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 15,
+        marginTop: 20,
+        textAlign: 'center',
       },
       modalTitleL: {
         fontSize: 20,

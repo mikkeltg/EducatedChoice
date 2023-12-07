@@ -5,7 +5,7 @@ export const CHATMESSAGES = [
     },
     {
       role: "user",
-      content: "Hvad kan blive som færdiguddannet biolog?", //komme med et eksempel på et spørgsmål
+      content: "Hvad man kan blive som færdiguddannet biolog?", //komme med et eksempel på et spørgsmål
     },
     {
       role: "assistant",
