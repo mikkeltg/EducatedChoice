@@ -162,38 +162,6 @@ const useUsersOwnAverage = async () => {
             <SafeAreaView style={GlobalStyles.container}>
             <Text style={GlobalStyles.headerL}>Vælg filtre</Text>
             <View style={GlobalStyles.modalContainerL}>
-                <Text style={GlobalStyles.modalTitle}>Uddannelsestype</Text>
-                <FlatList
-                    data={educationTypes}
-                    renderItem={({ item }) => (
-                        <TouchableOpacity
-                            style={GlobalStyles.locationItemL}
-                            onPress={() => setSelectedEducationType(item)}
-                        >
-                            <Text style={[GlobalStyles.locationItemTextL, { fontWeight: selectedEducationType == item ? 'bold' : 'normal' }]}>{item}</Text>
-                        </TouchableOpacity>
-                        )}
-                    keyExtractor={(item) => item}
-                    extraData={selectedEducationType}
-                />
-            </View>
-            <View style={GlobalStyles.modalContainerL}>
-                <Text style={GlobalStyles.modalTitle}>Byer</Text>
-                <FlatList
-                    data={locations}
-                    renderItem={({ item }) => (
-                        <TouchableOpacity
-                            style={GlobalStyles.locationItemL}
-                            onPress={() => setSelectedLocation(item)}
-                        >
-                            <Text style={[GlobalStyles.locationItemTextL, { fontWeight: selectedLocation == item ? 'bold' : 'normal' }]}>{item}</Text>
-                        </TouchableOpacity>
-                        )}
-                    keyExtractor={(item) => item}
-                    extraData={selectedEducationType}
-                />
-            </View>
-            <View style={GlobalStyles.modalContainerL}>
                 <Text style={GlobalStyles.modalTitle}>Adgangskvotient</Text>
                 <View style={GlobalStyles.modalContainerLHorizontal}>
                     <TextInput  
@@ -235,6 +203,39 @@ const useUsersOwnAverage = async () => {
             </View>
                 {selectedMinStartWage>0?<Text style={GlobalStyles.text}>Filter på startløn er sat til: <Text style={[{fontWeight:"bold"}]}>{selectedMinStartWage}</Text></Text>:null} 
             </View>
+            <View style={GlobalStyles.modalContainerL}>
+                <Text style={GlobalStyles.modalTitle}>Uddannelsestype</Text>
+                <FlatList
+                    data={educationTypes}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity
+                            style={GlobalStyles.locationItemL}
+                            onPress={() => setSelectedEducationType(item)}
+                        >
+                            <Text style={[GlobalStyles.locationItemTextL, { fontWeight: selectedEducationType == item ? 'bold' : 'normal' }]}>{item}</Text>
+                        </TouchableOpacity>
+                        )}
+                    keyExtractor={(item) => item}
+                    extraData={selectedEducationType}
+                />
+            </View>
+            <View style={GlobalStyles.modalContainerL}>
+                <Text style={GlobalStyles.modalTitle}>Byer</Text>
+                <FlatList
+                    data={locations}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity
+                            style={GlobalStyles.locationItemL}
+                            onPress={() => setSelectedLocation(item)}
+                        >
+                            <Text style={[GlobalStyles.locationItemTextL, { fontWeight: selectedLocation == item ? 'bold' : 'normal' }]}>{item}</Text>
+                        </TouchableOpacity>
+                        )}
+                    keyExtractor={(item) => item}
+                    extraData={selectedEducationType}
+                />
+            </View>
+           
              <Pressable style={GlobalStyles.button} onPress={() => {
                 setfilteredEducations(getEligbleEducations());
                 toggleModal();
