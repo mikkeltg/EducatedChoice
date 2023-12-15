@@ -216,7 +216,7 @@ function addEducationToCompare({navn, universityName, adgangskvotient, checked})
             <Text>Loading...</Text>
             
             : (
-            extractedData.map((education, index) => { //henter hver uddannelse i extractedData og viser dem
+            extractedData.sort().map((education, index) => { //henter hver uddannelse i extractedData og viser dem
                 return <Education
                     key={index}
                     adgangskvotient={education.adgangskvotient}

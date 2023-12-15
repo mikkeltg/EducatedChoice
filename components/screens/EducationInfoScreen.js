@@ -6,7 +6,8 @@ import {
   View,
   Text,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  SafeAreaView
 } from "react-native";
 import {
   getFirestore,
@@ -15,15 +16,18 @@ import {
   getDocs,
   where,
   updateDoc,
+  getDoc
 } from "firebase/firestore";
 import { getAuth, useAuth } from "firebase/auth";
 import GlobalStyles from "../../GlobalStyles";
+import getUserAverageGrades from "../services/GetUserGrades";
 
 // Selve komponenten, der eksporteres til App.js
 function EducationInformationScreen(props) {
   const params = props.route.params; // Argumenterne/parametrene i form af et uddannelsesnavn givet af brugeren i FilterEducationType.js
   const educationName = params.educationName; // Få navn på uddannelse fra navigation route parameters
   const [educationInformation, setEducationInformation] = useState(null); // usestate, hvori de senere indhentede uddannelsesdetaljer gemmes
+  
 
 
     // Funktion der henter information om den enkelte uddannelse
@@ -43,7 +47,6 @@ function EducationInformationScreen(props) {
           newData.push(doc.data()); 
         });
         setEducationInformation(newData[0]); // indsæt uddannelsesinformation fra midlertidigt array ind i usestate variabel mph. at tilgå disse senere
-        
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -52,9 +55,20 @@ function EducationInformationScreen(props) {
 
   useEffect(() => {
     fetchEducationInformation();
+    (async () => {
+      const grades = await getUserAverageGrades();
+      if (typeof grades == "number") {
+        setUserGradeAverage(grades)
+      } else{
+        console.log("Error getting user grades");
+      }
+    })();
   }, [educationName]); // Denne useeffect sørger for, at der bliver fetched nyt info, når brugeren vælger en ny uddannelse
   
   const [currentUserUID, setCurrentUserUID] = useState(null); // usestate, hvori den aktive brugers UID gemmes
+  const [userGradeAverage, setUserGradeAverage] = useState(null); 
+
+  
 
   // Funktion der håndterer, når brugeren trykker på en favoritknap
     const handleFavButtonClick = async (cityName, universityName) => {
@@ -64,15 +78,10 @@ function EducationInformationScreen(props) {
       //If it is not, add it
       try{
         const auth = getAuth();
-        if (!auth.currentUser) {
-          // Handle the case where the user is not authenticated
-          console.error("User not authenticated.");
-          return;
-        }
         const userUID = auth.currentUser.uid;
         // Make a copy of the educationInformation to update the state
         const updatedEducationInformation = { ...educationInformation };
-
+    
         // Find the specific university
         const universitiesInCity = updatedEducationInformation["Lokationer"][cityName];
         const universityInfo = universitiesInCity[universityName];
@@ -130,15 +139,17 @@ function EducationInformationScreen(props) {
   // Der vises hhv. uddannelsesnavnet, beskrivelse, byer, hvori uddannelsen findes, de enkelte uddannelser i disse byer, samt adgangskvotienter for disse universiteter. 
   return (
     
-<View>
+<SafeAreaView>
   {educationInformation && (
     <View>
-      <Text style={GlobalStyles.header}>{educationInformation.Navn}</Text>
+      <Text style={{ fontSize: 22, marginTop: 20, alignSelf: "center"}}>{educationInformation.Navn}</Text>
       <ScrollView style={{ margin: "5%" }}>
+        {educationInformation.Fagområde && <Text style={GlobalStyles.text}>{"📚 Studiets fagområde: " + educationInformation.Fagområde}</Text>}
+        {educationInformation.Løn && <Text style={GlobalStyles.text}>{"💸 Gennemsnitlig månedsløn som færdiguddannet: " + educationInformation.Løn}</Text>}
         <Text>{educationInformation.Beskrivelse || "Beskrivelse kunne ikke findes."}</Text>
         <View>
           {educationInformation["Lokationer"] &&
-            Object.keys(educationInformation["Lokationer"]).map((cityName, cityIndex) => {
+            Object.keys(educationInformation["Lokationer"]).sort().map((cityName, cityIndex) => {
               const areaSpecificEducationInformation = educationInformation["Lokationer"][cityName]; // Få informationer fra den enkelte by
               return (
                 <View key={cityIndex} style={{ fontSize: 20, marginTop: 10, marginBottom: 5 }}>
@@ -151,13 +162,13 @@ function EducationInformationScreen(props) {
                     console.log("University info: ", universityInfo);
                     return (
                       <View key={uniIndex} style={GlobalStyles.documentContainerL}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: "center"}}>
                           <View>
                             <Text>Universitet: {universityName || "Universitet kunne ikke findes."}</Text>
-                            <Text>Adgangskvotient: {universityInfo["Adgangskvotient"] || "Adgangskvotient kunne ikke findes."}</Text>
+                            <Text>Adgangskvotient: <Text style={userGradeAverage && (universityInfo["Adgangskvotient"] > userGradeAverage ? {color: "red"} : {color: "green"})}>{universityInfo["Adgangskvotient"] || "Adgangskvotient kunne ikke findes."}</Text></Text>
                           </View>
                           <TouchableOpacity onPress={() => handleFavButtonClick(cityName, universityName)}>
-                            <Text>{isCurrentUserFav ? '❤️' : '🤍'} {universityInfo["Fav"] ? universityInfo["Fav"].length : 0}</Text>
+                            <Text style={{ alignSelf: "center"}}>{isCurrentUserFav ? '❤️' : '🤍'} {universityInfo["Fav"] ? universityInfo["Fav"].length : 0}</Text>
                           </TouchableOpacity>
                         </View>
                       </View>
@@ -170,7 +181,7 @@ function EducationInformationScreen(props) {
       </ScrollView>
     </View>
   )}
-</View>
+</SafeAreaView>
 
 );
 }

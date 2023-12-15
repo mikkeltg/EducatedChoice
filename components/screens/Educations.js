@@ -248,7 +248,7 @@ const useUsersOwnAverage = async () => {
     </Text>
     <ScrollView>
     {/* Her vises de enkelte uddannelser */}
-    {filteredEducations.map((document, index) => (
+    {filteredEducations.sort().map((document, index) => (
         <View key={index} style={GlobalStyles.documentContainerL}>
             <Text style={GlobalStyles.headerL}>{document.Navn}</Text>
             <Button
