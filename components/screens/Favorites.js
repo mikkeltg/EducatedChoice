@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Pressable} from 'react-native';
-import GlobalStyles  from '../../GlobalStyles';
+import GlobalStyles  from '../../GlobalStyles.js';
 import { getFirestore} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { doc, updateDoc, getDoc } from "firebase/firestore";

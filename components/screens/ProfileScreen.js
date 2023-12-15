@@ -68,7 +68,7 @@ function ProfileScreen() {
   if (!auth.currentUser) {
     return (
       <View>
-        <Text>Not found</Text>
+        <Text>Bruger ikke fundet</Text>
       </View>
     );
   }

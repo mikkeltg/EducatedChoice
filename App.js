@@ -62,7 +62,7 @@ export default function App() {
   const GuestPage = () => {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Welcome">
+        <Stack.Navigator initialRouteName="Velkommen">
           <Stack.Screen name="Velkommen" component={WelcomeScreen} />
           <Stack.Screen name="Opret ny bruger" component={SignUpForm} />
           <Stack.Screen name="Log ind" component={LoginForm} />
