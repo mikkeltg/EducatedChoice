@@ -3,12 +3,7 @@ import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import ProfileScreen from "./screens/ProfileScreen";
-
-import Prereq from "./screens/Prereq";
-import FilterEducation from "./screens/Favorites";
-
 import EducationInformationScreen from "./screens/EducationInfoScreen";
-
 import Favorites from "./screens/Favorites";
 import SearchEducation from "./screens/SearchEducation";
 import ChatScreen from "./screens/ChatScreen";
@@ -25,16 +20,13 @@ function Navigator() {
       <Drawer.Navigator initialRouteName="Profiloplysninger">
       {/* <Drawer.Screen name="Hjem" component={HomeScreen} /> */}
         <Drawer.Screen name="Profiloplysninger" component={ProfileScreen} />
-        <Drawer.Screen name="Opdater karaktergennemsnit" component={Prereq} />
         {/* <Drawer.Screen name="Mine lokationspræferencer" component={Favorites} /> */}
         <Drawer.Screen name="Opdag uddannelser" component={Educations} />
-        <Drawer.Screen name="Mine favorituddannelser" component={FilterEducation}/>
+        <Drawer.Screen name="Mine favorituddannelser" component={Favorites}/>
         <Drawer.Screen name="Uddannelsesdetaljer" component={EducationInformationScreen} options={{
                   drawerItemStyle: { display: 'none' } // Skjul detaljeside
         }}/>
         <Drawer.Screen name="Søg efter uddannelser" component={SearchEducation} />
-        
-
         <Drawer.Screen name="Spørg UddannelsesGPT" component={ChatScreen} />
         
       </Drawer.Navigator>

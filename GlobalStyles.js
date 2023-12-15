@@ -11,7 +11,12 @@ const GlobalStyles = StyleSheet.create
         textAlign: 'center',
         margin: 10,
     },
-    
+    textAdvise: {
+        fontSize: 12,
+        textAlign: 'center',
+        margin: 10,
+        color: "grey"
+    },
     container: { 
         flex: 1, 
         width: '100%', 
