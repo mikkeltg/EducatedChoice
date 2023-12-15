@@ -81,17 +81,19 @@ function ProfileScreen() {
     <View style={GlobalStyles.textContainer}>
       {profileInfo && (
         <View>
-          <Text style={GlobalStyles.headerL}>Profile information</Text>
+          {/* <Text style={GlobalStyles.headerL}>Profiloplysninger</Text> */}
           <Text style={GlobalStyles.profileTextStyle}>Email: {profileInfo.email || "Not available"}</Text>
-          <Text style={GlobalStyles.profileTextStyle}>Name: {profileInfo.name || "Not available"}</Text>
-          <Text style={GlobalStyles.profileTextStyle}>Snit: {profileInfo.snit || "Not available"}</Text>
+          <Text style={GlobalStyles.profileTextStyle}>Navn: {profileInfo.name || "Not available"}</Text>
+          <Text style={GlobalStyles.profileTextStyle}>Angivet karaktergennemsnit: {profileInfo.snit || "Not available"}</Text>
+          {/* fjernes */}
           <Text style={GlobalStyles.profileTextStyle}>Ønsket lokation: {profileInfo.location || "Not available"}</Text>
         </View>
       )}
       <Pressable style={GlobalStyles.button} onPress={() => checkForUpdates()}>
+        {/* fjernes */}
       <Text style={GlobalStyles.buttonText}>{title='Opdatér'}</Text>
       </Pressable>
-
+        {/* flyttes til navigator */}
       <Pressable style={GlobalStyles.button} onPress={() => handleLogOut()}>
       <Text style={GlobalStyles.buttonText}>{title='Log ud'}</Text>
       </Pressable>

@@ -52,17 +52,14 @@ function SignUpForm() {
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
-        setErrorMessage(errorMessage);
-        // ..
+        setErrorMessage(errorCode);
       });
   };
 
   return (
-    <View>
-      <Text style={GlobalStyles.header}>Sign up</Text>
+    <View style={GlobalStyles.containerL}>
       <TextInput
-        placeholder="Name"
+        placeholder="Navn"
         value={name}
         onChangeText={(name) => setName(name)}
         style={GlobalStyles.inputField}
@@ -74,13 +71,13 @@ function SignUpForm() {
         style={GlobalStyles.inputField}
       />
       <TextInput
-        placeholder="password"
+        placeholder="Adgangskode"
         value={password}
         onChangeText={(password) => setPassword(password)}
         secureTextEntry
         style={GlobalStyles.inputField}
       />
-      {errorMessage && <Text style={GlobalStyles.error}>Error: {errorMessage}</Text>}
+      {errorMessage && <Text style={GlobalStyles.error}>Hov, der skete en fejl: {errorMessage}</Text>}
       {renderButton()}
     </View>
   );

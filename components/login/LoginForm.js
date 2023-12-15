@@ -33,35 +33,33 @@ function LoginForm() {
         })
         .catch((error) => {
             const errorCode = error.code;
-            const errorMessage = error.message;
-            setErrorMessage(errorMessage);
+            setErrorMessage(errorCode);
         });
     }
 
     // Knap der aktiverer login
     const renderButton = () => {
-        return <Button onPress={() => handleSubmit()} title="Login" />;
+        return <Button onPress={() => handleSubmit()} title="Log ind" />;
     };
 
     // Selve komponenten med loginfelter og knap returneres
     return (
-        <View>
-            <Text style={GlobalStyles.header}>Login</Text>
+        <View style={GlobalStyles.containerL}>
             <TextInput
-                placeholder="email"
+                placeholder="Email"
                 value={email}
                 onChangeText={(email) => setEmail(email)}
                 style={GlobalStyles.inputField}
             />
             <TextInput
-                placeholder="password"
+                placeholder="Adgangskode"
                 value={password}
                 onChangeText={(password) => setPassword(password) }
                 secureTextEntry
                 style={GlobalStyles.inputField}
             />
             {errorMessage && (
-                <Text style={GlobalStyles.error}>Error: {errorMessage}</Text>
+                <Text style={GlobalStyles.error}>Hov, der skete en fejl: {errorMessage}</Text>
             )}
             {renderButton()}
         </View>

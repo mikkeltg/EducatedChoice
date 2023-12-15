@@ -9,13 +9,13 @@ const WelcomeScreen = ({navigation}) => {
   return (
     <View style={GlobalStyles.container}>
       <Button
-        title="Sign Up"
-        onPress={() => navigation.navigate('SignUp')}
+        title="Opret ny bruger"
+        onPress={() => navigation.navigate('Opret ny bruger')}
         containerStyle={GlobalStyles.buttonContainer}
       />
       <Button
-        title="Sign In"
-        onPress={() => navigation.navigate('SignIn')}
+        title="Log ind"
+        onPress={() => navigation.navigate('Log ind')}
         containerStyle={GlobalStyles.buttonContainer}
       />
     </View>

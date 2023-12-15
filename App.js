@@ -63,9 +63,9 @@ export default function App() {
     return (
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Welcome">
-          <Stack.Screen name="Welcome" component={WelcomeScreen} />
-          <Stack.Screen name="SignUp" component={SignUpForm} />
-          <Stack.Screen name="SignIn" component={LoginForm} />
+          <Stack.Screen name="Velkommen" component={WelcomeScreen} />
+          <Stack.Screen name="Opret ny bruger" component={SignUpForm} />
+          <Stack.Screen name="Log ind" component={LoginForm} />
         </Stack.Navigator>
       </NavigationContainer>
     );
