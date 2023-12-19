@@ -255,15 +255,15 @@ const GlobalStyles = StyleSheet.create
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        backgroundColor: '#f2f2f2',
+        backgroundColor: 'white',
         padding: 10,
         borderRadius: 5,
         borderWidth: 1,
         borderColor: '#ccc',
         marginBottom: 10,
+        flexGrow: 1
       },
       dropdownInput: {
-        flex: 1,
         fontSize: 16,
       },
       dropdownArrow: {
