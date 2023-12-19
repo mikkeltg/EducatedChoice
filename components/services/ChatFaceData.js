@@ -1,4 +1,8 @@
+
+/*
+
 export default ChatFaceData=[
+
     {
         id:1,
         name:'Noyi',
@@ -34,4 +38,4 @@ export default ChatFaceData=[
         primary:'#2473FE',
         secondary:''
     },
-]
+] */
