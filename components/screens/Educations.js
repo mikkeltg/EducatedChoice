@@ -26,6 +26,7 @@ import {
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import GlobalStyles from "../../GlobalStyles";
+import fetchUserGrades from "../services/GetUserGrades"
 
 
 // Selve komponenten, der eksporteres til App.js
@@ -109,59 +110,40 @@ function FilterEducationType({ navigation }) {
           setData(newData);
           setfilteredEducations(newData);
         }
+        const grades = await fetchUserGrades();      
+        setUserAverage(grades);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchData();
   }, []);
-  // UseEffect der indhenter brugerens gennemsnit, hvis denne har en 
-  const fetchUserGrades = async () => { // Selve funktionen der indhenter uddannelsesdate fra databasen
-    try {
-    console.log("Fetching grade average for user");
-        const db = getFirestore();
-        const auth = getAuth(); 
-        const user = auth.currentUser;
-        const userDocRef = doc(db, "users", user.uid); //finder den bruger der er logget ind.
-        const docSnap = await getDoc(userDocRef); //henter brugerens data fra databasen
-        setUserAverage(docSnap.data().snit);
-    } catch (error) {
-    console.error("Error fetching grade average:", error);
-    }
-};
+
 // Funktion til at filtrere uddannelser efter uddannelsesnavn, hvis brugeren søger efter dette
 useEffect(()=>{
-    console.log(searchName);
-    console.log(searchName == "");
-    console.log(filteredEducations);
     if (searchName == "") {
-      setFilteredEducationsWithNameSearch("");
+      setFilteredEducationsWithNameSearch([]);
     } else {
       const educationNameMatches = filteredEducations.filter(educationObject =>
         educationObject["Navn"].toLowerCase().includes(searchName.toLowerCase())
       );
       setFilteredEducationsWithNameSearch(educationNameMatches);
     }
-}, [searchName])
+}, [searchName, filteredEducations])
 // Useeffect der sætter den endelige liste med uddannelser til enten at være uddannelser, der kun lever op til filtre, eller om de også skal leve op til søgning på navn 
 useEffect(()=>{
-    console.log("useeffect");
-    console.log(filteredEducationsWithNameSearch);
-    console.log(filteredEducations);
-    if (filteredEducationsWithNameSearch.length > 0) {
+    if (searchName.length > 0) {
       setFinalEducations(filteredEducationsWithNameSearch);
     } else {
       setFinalEducations(filteredEducations)
     };
 }, [filteredEducations, filteredEducationsWithNameSearch])
 
-useEffect(()=>{
-    fetchUserGrades();
-}, [])
-
   // Funktion der sætter filter på adgangskvotient lig med brugerens eget gennemsnit 
 const useUsersOwnAverage = async () => { 
-        setSelectedAverage(userAverage);
+  const grades = await fetchUserGrades();      
+  setSelectedAverage(grades);
+  setUserAverage(grades);
 };
 
   // Funktion der enten viser eller skjuler dropdown muligheder (filter) ved tryk på dropdown baren
@@ -283,12 +265,12 @@ const useUsersOwnAverage = async () => {
     {/* search bar for educations */}
     <TextInput
         style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10, backgroundColor: "white" }}
-        placeholder="Søg efter uddannelse på navn..."
+        placeholder="Søg på uddannelsesnavn..."
         value={searchName}
         onChangeText={setSearchName}
       />
-    <Text style={[GlobalStyles.textL, {fontWeight: 'bold'}]}>
-    Viser uddannelser for følgende filtre: {String(selectedEducationType)} {selectedAverage != 13 ? selectedAverage: ""} {selectedLocation} {selectedMinStartWage > 0 ? selectedMinStartWage: ""}
+    <Text style={[GlobalStyles.textL]}>
+    Viser uddannelser for følgende filtre: {searchName} {String(selectedEducationType)} {selectedAverage != 13 ? selectedAverage: ""} {selectedLocation} {selectedMinStartWage > 0 ? selectedMinStartWage: ""}
     </Text>
     <ScrollView>
     {/* Her vises de enkelte uddannelser */}
