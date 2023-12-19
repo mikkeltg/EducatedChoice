@@ -34,7 +34,7 @@ export default function ChatScreen() {
     ]);
   };
 
-  const [forceUpdate, setForceUpdate] = useState(false);
+  const [forceUpdate, setForceUpdate] = useState(0);
 
   const getBardResp = async (msg) => {
     try {
@@ -55,6 +55,7 @@ export default function ChatScreen() {
   
         console.log('New Message:', chatAIResp);
         setMessages((previousMessages) => GiftedChat.append(previousMessages, [chatAIResp]));
+        setForceUpdate(forceUpdate + 1);
       } else {
         console.error('Unexpected API response:', response);
       }
@@ -64,6 +65,13 @@ export default function ChatScreen() {
       if (error.response) {
         console.error('Server Response:', error.response.data);
         console.error('Status Code:', error.response.status);
+        if (error.response.status === 504) {
+          // Håndtering af timeout-fejl - f.eks. forsøg igen efter nogle sekunder
+          console.log('Trying again after a delay...');
+          setTimeout(() => {
+            getBardResp(msg);
+          }, 5000); // Vent i 5 sekunder, før du prøver igen (kan justeres)
+        }
       } else if (error.request) {
         console.error('No response received from the server');
       } else {
