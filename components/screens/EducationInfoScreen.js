@@ -1,6 +1,4 @@
 // Denne komponent skal indhente uddannelsesdetaljer fra Firestore databasen og fremvise dem til brugeren
-
-// Nødvendige pakker hentes
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -66,7 +64,7 @@ function EducationInformationScreen(props) {
   }, [educationName]); // Denne useeffect sørger for, at der bliver fetched nyt info, når brugeren vælger en ny uddannelse
   
   const [currentUserUID, setCurrentUserUID] = useState(null); // usestate, hvori den aktive brugers UID gemmes
-  const [userGradeAverage, setUserGradeAverage] = useState(null); 
+  const [userGradeAverage, setUserGradeAverage] = useState(null);  // usestate, hvori den aktive brugers gennemsnitlige karakter gemmes
 
   
 
@@ -111,11 +109,6 @@ function EducationInformationScreen(props) {
       } catch (error) {
         console.error("Error handling Fav button click:", error);
       }
-
-
-      // You need to implement the logic to handle the button click here
-      // For example, toggle the user's UID in and out of the "Fav" array for the specific university
-      console.log(`Fav button clicked for ${universityName} in ${cityName}`);
     };
 
   useEffect(() => {
@@ -167,6 +160,7 @@ function EducationInformationScreen(props) {
                             <Text>Universitet: {universityName || "Universitet kunne ikke findes."}</Text>
                             <Text>Adgangskvotient: <Text style={userGradeAverage && (universityInfo["Adgangskvotient"] > userGradeAverage ? {color: "red"} : {color: "green"})}>{universityInfo["Adgangskvotient"] || "Adgangskvotient kunne ikke findes."}</Text></Text>
                           </View>
+                          {/* Her vises en favoritknap, som brugeren kan trykke på for at tilføje eller fjerne universitetet som favorit */}
                           <TouchableOpacity onPress={() => handleFavButtonClick(cityName, universityName)}>
                             <Text style={{ alignSelf: "center"}}>{isCurrentUserFav ? '❤️' : '🤍'} {universityInfo["Fav"] ? universityInfo["Fav"].length : 0}</Text>
                           </TouchableOpacity>

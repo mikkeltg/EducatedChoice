@@ -115,8 +115,9 @@ const FilterEducation = () => {
         
         
      }
-
-    async function getAllEducations() { //henter alle uddannelser i databasen som ovenover undtagen den ikke sammenligner brugerens snit med adgangskvotienten
+    
+  //henter alle uddannelser i databasen som brugeren har "favourited", altså dem hvor brugerens UID er i "Fav" arrayet
+    async function getAllEducations() { 
       setEducations([])  
       setCompare(false)
       setLoading(true);
@@ -138,21 +139,22 @@ const FilterEducation = () => {
             const querySnapshot = await getDocs(q);
 
             const extracted = [];
-                
+              // Extract the data from each document
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
                     const navn = data.Navn;
                     const lokationer = data.Lokationer;
-              
+                    // Extract the data from each location
                     for (const city in lokationer) {
                       const universityObject = lokationer[city];
                       const universityName = Object.keys(universityObject)[0];
                       const adgangskvotientObject = universityObject[universityName];
                       
-        // Check if the user's UID is in the "Fav" array
+        // Tjek om brugerens UID er med i "Fav" array
         if (adgangskvotientObject && adgangskvotientObject.Fav && adgangskvotientObject.Fav.includes(userUID)) {
           if (adgangskvotientObject.Adgangskvotient) {
             const adgangskvotient = adgangskvotientObject.Adgangskvotient;
+            // Add the extracted data to the array
             extracted.push({
               navn,
               city,
@@ -163,16 +165,16 @@ const FilterEducation = () => {
         }
       }
     });
-                  
+              // Update the state with the extracted data
               setExtractedData(extracted)
                 setLoading(false);
-            
+            // Handle errors
             } catch (error) {
                 console.error("Error extracting data:", error);
                 setLoading(false);
             }
 }
-
+  
   const [compare, setCompare] = useState(false) //sætter compare til false som standard
 
   function compareEducations () {
