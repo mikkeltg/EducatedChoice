@@ -1,5 +1,11 @@
 For at køre filen, skal der gøres følgende:
 * npm i
+Hvis der kommer fejl 
+- npm install react-native-gesture-handler
+- npm install @react-navigation/bottom-tabs
+- npm install @expo/vector-icons
+
+
 * npx expo start
 
 Hvis der opstår problemer med chatbot, kan det være fordi, at vores API-key er udløbet. I dette tilfælde gøres følgende:
