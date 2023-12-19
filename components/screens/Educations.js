@@ -42,8 +42,12 @@ function FilterEducationType({ navigation }) {
   const [userAverage, setUserAverage] = useState(); // Gemmer brugerens valg af adgangskvotient/gennemsnit 
   const [selectedEducationType, setSelectedEducationType] = useState(""); // Gemmer brugerens valg af uddannelsestype 
   const [isModalVisible, setModalVisible] = useState(false); // Viser/gemmer dropdown bar til filtreringsmuligheder
-  const [selectedLocation, setSelectedLocation] = useState();
+  const [selectedLocation, setSelectedLocation] = useState(); 
   const [selectedMinStartWage, setSelectedMinStartWage] = useState(0);
+  const [searchName, setSearchName] = useState(""); // Gemmer brugerens valg af uddannelsestype 
+  const [filteredEducationsWithNameSearch, setFilteredEducationsWithNameSearch] = useState([]); // Gemmer brugerens valg af uddannelsestype 
+  const [finalEducations, setFinalEducations] = useState([]); // Den endelige lister af uddannelser, der vises til brugeren 
+
   
   const getEligbleEducations = () => {
     const eligibleEducations = [];
@@ -76,15 +80,9 @@ function FilterEducationType({ navigation }) {
           }
       }
       entryReqGrades.sort((a, b) => a - b); // Sorter med laveste først
-      if (!eligbleCity) {
+      if (selectedAverage < entryReqGrades[0] || !eligbleCity) {
         educationEligibility = false;
       }
-      if (selectedAverage < entryReqGrades[0]) {
-        educationEligibility = false;
-      }
-
-     
-    
       if(educationEligibility){
         eligibleEducations.push(data[i]);
       };
@@ -109,7 +107,7 @@ function FilterEducationType({ navigation }) {
 
           console.log("Fetched data:", newData);
           setData(newData);
-          setfilteredEducations(newData)
+          setfilteredEducations(newData);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -131,6 +129,32 @@ function FilterEducationType({ navigation }) {
     console.error("Error fetching grade average:", error);
     }
 };
+// Funktion til at filtrere uddannelser efter uddannelsesnavn, hvis brugeren søger efter dette
+useEffect(()=>{
+    console.log(searchName);
+    console.log(searchName == "");
+    console.log(filteredEducations);
+    if (searchName == "") {
+      setFilteredEducationsWithNameSearch("");
+    } else {
+      const educationNameMatches = filteredEducations.filter(educationObject =>
+        educationObject["Navn"].toLowerCase().includes(searchName.toLowerCase())
+      );
+      setFilteredEducationsWithNameSearch(educationNameMatches);
+    }
+}, [searchName])
+// Useeffect der sætter den endelige liste med uddannelser til enten at være uddannelser, der kun lever op til filtre, eller om de også skal leve op til søgning på navn 
+useEffect(()=>{
+    console.log("useeffect");
+    console.log(filteredEducationsWithNameSearch);
+    console.log(filteredEducations);
+    if (filteredEducationsWithNameSearch.length > 0) {
+      setFinalEducations(filteredEducationsWithNameSearch);
+    } else {
+      setFinalEducations(filteredEducations)
+    };
+}, [filteredEducations, filteredEducationsWithNameSearch])
+
 useEffect(()=>{
     fetchUserGrades();
 }, [])
@@ -140,7 +164,7 @@ const useUsersOwnAverage = async () => {
         setSelectedAverage(userAverage);
 };
 
-  // Funktion der enten viser eller skjuler dropdown muligheder ved tryk på dropdown baren
+  // Funktion der enten viser eller skjuler dropdown muligheder (filter) ved tryk på dropdown baren
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
@@ -149,7 +173,7 @@ const useUsersOwnAverage = async () => {
   // Nedenstående kode viser filtreringsbaren til brugeren samt en liste over de uddannelser, som lever op til den valgte filtrering
   return (
     <SafeAreaView style={GlobalStyles.containerL}>
-    <ScrollView>
+      <View style={{flexDirection: "row", justifyContent: "space-evenly", marginTop: 10}}>
         <TouchableOpacity
             onPress={toggleModal}
             style={GlobalStyles.dropdownContainer}
@@ -157,6 +181,17 @@ const useUsersOwnAverage = async () => {
         <Text style={GlobalStyles.dropdownInput}>Vælg filtre</Text>
         <Text style={GlobalStyles.dropdownArrow}>▼</Text>
         </TouchableOpacity>
+        {/* Nedenstående gør det muligt at nulstille filter */}
+      <Pressable onPress={() => {
+        setSelectedAverage(13);
+        setSelectedMinStartWage(0);
+        setSelectedEducationType("");
+        setSelectedLocation();
+        setfilteredEducations(data)
+      }}> 
+        <Text style={GlobalStyles.text}>Nulstil filtre</Text>
+      </Pressable>
+      </View>
         {/* Dropdown filter bar, der foldes ud, når brugeren trykker */}
         <Modal visible={isModalVisible} animationType="slide">
             <SafeAreaView style={GlobalStyles.container}>
@@ -183,6 +218,7 @@ const useUsersOwnAverage = async () => {
                     )}
                 </View>
             </View>
+
                 {selectedAverage!=13?<Text style={GlobalStyles.text}>Kun agangskvotient på <Text style={[{fontWeight:"bold"}]}>{selectedAverage}</Text> eller mindre</Text>:null} 
             </View>
             <View style={GlobalStyles.modalContainerL}>
@@ -244,12 +280,19 @@ const useUsersOwnAverage = async () => {
             </Pressable>
         </SafeAreaView>
     </Modal>
+    {/* search bar for educations */}
+    <TextInput
+        style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10, backgroundColor: "white" }}
+        placeholder="Søg efter uddannelse på navn..."
+        value={searchName}
+        onChangeText={setSearchName}
+      />
     <Text style={[GlobalStyles.textL, {fontWeight: 'bold'}]}>
     Viser uddannelser for følgende filtre: {String(selectedEducationType)} {selectedAverage != 13 ? selectedAverage: ""} {selectedLocation} {selectedMinStartWage > 0 ? selectedMinStartWage: ""}
     </Text>
     <ScrollView>
     {/* Her vises de enkelte uddannelser */}
-    {filteredEducations.sort().map((document, index) => (
+    {finalEducations.sort().map((document, index) => (
         <View key={index} style={GlobalStyles.documentContainerL}>
             <Text style={GlobalStyles.headerL}>{document.Navn}</Text>
             <Button
@@ -259,16 +302,6 @@ const useUsersOwnAverage = async () => {
             </Button>
         </View>
     ))}
-    </ScrollView>
-      {/* Nedenstående gør det muligt at nulstille filter */}
-      <Pressable style={GlobalStyles.button} onPress={() => {
-        setSelectedAverage(13);
-        setSelectedMinStartWage(0);
-        setSelectedEducationType("");
-        setSelectedLocation();
-      }}> 
-        <Text style={GlobalStyles.text}>Nulstil filtre</Text>
-      </Pressable>
     </ScrollView>
     </SafeAreaView>
   );
