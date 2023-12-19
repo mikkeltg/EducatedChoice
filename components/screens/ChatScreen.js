@@ -9,13 +9,13 @@ import {
 import { FontAwesome } from "@expo/vector-icons";
 
 import SendMessage from "../services/RequestPage";
-import ChatFaceData from "../services/ChatFaceData";
 import { CHATMESSAGES } from "../services/const";
 
 let CHAT_BOT_FACE =
-  "https://res.cloudinary.com/dknvsbuyy/image/upload/v1685678135/chat_1_c7eda483e3.png";
+  "https://res.cloudinary.com/dknvsbuyy/image/upload/v1685678135/chat_1_c7eda483e3.png"; //her definerer vi vores chat bot's profilbillede
 
-export default function ChatScreen() {
+//her definerer vi vores ChatScreen komponent, som vi bruger til at vise vores chat
+export default function ChatScreen({ userName }) { 
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -23,13 +23,11 @@ export default function ChatScreen() {
     initializeChat();
   }, []);
 
-  const initializeChat = async () => {
-    const id = await AsyncStorage.getItem("chatFaceId");
-    CHAT_BOT_FACE = id ? ChatFaceData[id].image : ChatFaceData[0].image;
+  const initializeChat = async () => { //her starter vi chatten med en besked fra vores chat bot
     setMessages([
       {
         _id: 1,
-        text: "Hello, I am " + ChatFaceData[id].name + ", How can I help you?",
+        text: "Hejsa! Hvad kan jeg hjælpe dig med i dag?",
         createdAt: new Date(),
         user: {
           _id: 2,
@@ -40,16 +38,17 @@ export default function ChatScreen() {
     ]);
   };
 
-  const [forceUpdate, setForceUpdate] = useState(0);
+  const [forceUpdate, setForceUpdate] = useState(0); //gennemtvinger en opdatering af chatten ved at opdatere state med en ny værdi
 
+  //her definerer vi vores getBardResp funktion, som vi bruger til at sende brugerens besked til api'en og modtage et svar
   const getBardResp = async (msg) => {
     try {
-      const response = await SendMessage(msg, "da");
+      const response = await SendMessage(msg, "da"); //her afventer vi svar fra api'en og gemmer det i vores response variabel, og har defineret sproget til dansk
       console.log("API Response:", response);
 
-      if (response && response.data && response.data.result) {
-        const chatAIResp = {
-          _id: Math.random() * (9999999 - 1),
+      if (response && response.data && response.data.result) { //her tjekker vi om vi har modtaget et svar fra api'en og om det indeholder et resultat
+        const chatAIResp = { //her definerer vi vores chatAIResp objekt, som indeholder ai'ens svar
+          _id: Math.random() * (9999999 - 1), //her genererer vi et tilfældigt id til beskeden
           text: response.data.result,
           createdAt: new Date(),
           user: {
@@ -59,12 +58,14 @@ export default function ChatScreen() {
           },
         };
 
-        console.log("New Message:", chatAIResp);
-        setMessages((previousMessages) =>
-          GiftedChat.append(previousMessages, [chatAIResp])
+        console.log("New Message:", chatAIResp); //her logger vi ai'ens svar i konsollen for at se om det er korrekt
+        setMessages((previousMessages) => 
+          GiftedChat.append(previousMessages, [chatAIResp]) //samler ai'ens svar med de tidligere beskeder i chatten og opdatere chatten med det nye svar
         );
-        setForceUpdate(forceUpdate + 1);
+        setForceUpdate(forceUpdate + 1); //gennemtvinger en opdatering af chatten ved at opdatere state med en ny værdi
       } else {
+
+        //håndtering af errors fra api'en
         console.error("Unexpected API response:", response);
       }
     } catch (error) {
@@ -88,16 +89,17 @@ export default function ChatScreen() {
     }
   };
 
+  //her definerer vi vores onSend funktion, som vi bruger til at sende brugerens besked til api'en og modtage et svar
   const onSend = useCallback(async (messages = []) => {
     //når brugeren sender en besked
     setMessages((previousMessages) =>
-      GiftedChat.append(previousMessages, messages)
+      GiftedChat.append(previousMessages, messages) //samler brugerens besked med de tidligere beskeder i chatten og opdatere chatten med den nye besked
     );
 
     if (messages[0].text) {
       try {
         setLoading(true);
-        await getBardResp(messages[0].text);
+        await getBardResp(messages[0].text); 
       } catch (error) {
         // Handle API request error
         console.error("API Request Error:", error);
@@ -107,7 +109,7 @@ export default function ChatScreen() {
     }
   }, []);
 
-  const renderBubble = (props) => {
+  const renderBubble = (props) => { //her definerer vi vores renderBubble funktion, som vi bruger til at style vores beskeder
     return (
       <Bubble
         {...props}
@@ -122,8 +124,8 @@ export default function ChatScreen() {
             padding: 2,
           },
           left: {
-            color: "#671ddf",
-            padding: 2,
+            color: "#000000",
+            padding: 5,
           },
         }}
       />
@@ -135,11 +137,14 @@ export default function ChatScreen() {
       <InputToolbar
         {...props}
         containerStyle={{
-          padding: 3,
-          backgroundColor: "#CFD7C7",
-          color: "#fff",
+          backgroundColor: "#CFD7C7", 
+          borderTopColor: "#013220", 
+          borderTopWidth: 1,
+          padding: 1,
         }}
-        textInputStyle={{ color: "#fff" }}
+        textInputStyle={{ color: "#013220" }}
+        placeholder="Skriv en besked..."
+        placeholderTextColor="#888"
       />
     );
   };
