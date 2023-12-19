@@ -20,7 +20,7 @@ function ProfileScreen() {
     if (user) {
       const db = getFirestore();
       const userDocRef = doc(db, "users", user.uid);
-
+      
       try {
         const docSnap = await getDoc(userDocRef);
         if (docSnap.exists()) {
@@ -38,11 +38,6 @@ function ProfileScreen() {
     fetchUserProfile();
   }, [user]);
 
-  // useEffect(() => {
-  //   setGrade(profileInfo.snit);
-  // }, [profileInfo]);
-  
-
   const handleLogOut = async () => {
     await signOut(auth)
       .then(() => {
@@ -53,22 +48,6 @@ function ProfileScreen() {
         console.error("Error during logout:", error);
       });
   };
-
-  // const checkForUpdates = async () => {
-  //   const db = getFirestore();
-  //   const userDocRef = doc(db, "users", user.uid);
-
-  //   try {
-  //     const docSnap = await getDoc(userDocRef);
-  //     if (docSnap.exists()) {
-  //       setProfileInfo(docSnap.data());
-  //     } else {
-  //       console.log("Profile not found in Firestore");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error checking for updates:", error);
-  //   }
-  // };
 
   //Hvis der af en eller anden grund ikke skulle være muligt at fremfinde den aktive bruger,
   //skal der udprintes en besked om dette igennem en tekstkomponent
@@ -100,6 +79,7 @@ function ProfileScreen() {
   }
   
   useEffect(() => {
+    //Hvis grade er et tal, så gemmer den det i databasen og henter brugerens profil oplysninger igen og sætter newGrade til true
     if(!isNaN(parseFloat(grade))){
       saveGrade();
       fetchUserProfile();
@@ -109,6 +89,7 @@ function ProfileScreen() {
     }
   }, [grade]);
 
+ //Hvis newGrade er true, så udskrives en tekst der fortæller at snittet er gemt
   const newGradeText = () => {
     return (
       <Text style={GlobalStyles.textAdvise}>
@@ -121,11 +102,9 @@ function ProfileScreen() {
   // Metoden returnerer mailadressen af den aktive bruger.
   // Mailadressen udskrives ved brug af en tekstkomponent.
   return (
-   // <View style={GlobalStyles.backgroundColor}>
     <View style={GlobalStyles.textContainer}>
       {profileInfo && (
         <View>
-          {/* <Text style={GlobalStyles.headerL}>Profiloplysninger</Text> */}
           <Text style={GlobalStyles.text}>Email: <Text style={{fontWeight: "bold"}}>{profileInfo.email || "Not available"}</Text></Text>
           <Text style={GlobalStyles.text}>Navn: <Text style={{fontWeight: "bold"}}>{profileInfo.name || "Not available"}</Text></Text>
           <View style={{
@@ -133,6 +112,9 @@ function ProfileScreen() {
             justifyContent: "space-around",
             alignContent: "center"
           }}>
+            
+            {/*Her er der lavet en ternary operator, som tjekker om der er et snit i databasen. 
+            Hvis der er, så udskrives det, ellers udskrives en tekst der fortæller at der ikke er noget snit i databasen. */}
             <Text style={GlobalStyles.text}>Karaktergennemsnit:</Text>
             <TextInput style={GlobalStyles.numberInput}
                   placeholder={profileInfo.snit.toString() || "Tast snit"}
@@ -151,7 +133,6 @@ function ProfileScreen() {
       
 
     </View>
-    //</View>
   );
 }
 

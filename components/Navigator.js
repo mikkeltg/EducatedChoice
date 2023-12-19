@@ -18,9 +18,7 @@ function Navigator() {
   return (
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Profiloplysninger">
-      {/* <Drawer.Screen name="Hjem" component={HomeScreen} /> */}
         <Drawer.Screen name="Profiloplysninger" component={ProfileScreen} />
-        {/* <Drawer.Screen name="Mine lokationspræferencer" component={Favorites} /> */}
         <Drawer.Screen name="Opdag uddannelser" component={Educations} />
         <Drawer.Screen name="Mine favorituddannelser" component={Favorites}/>
         <Drawer.Screen name="Uddannelsesdetaljer" component={EducationInformationScreen} options={{
@@ -37,6 +35,6 @@ function Navigator() {
 export default Navigator;
 
 //How to Navigator:
-//Importere jeres komponente overst
+//Importere  komponente overst
 //Sæt den ind i Drawer.Navigator: <Drawer.Screen name="TITEL PÅ SIDEN" component={SELVE NAVNET PÅ KOMPONENTEN} />
-//husk at eksportere jeres komponent i komponenten.js filen
+//husk at eksportere komponent i komponenten.js filen
