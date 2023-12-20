@@ -118,8 +118,8 @@ function ProfileScreen() {
             <Text style={GlobalStyles.text}>Karaktergennemsnit:</Text>
             <TextInput style={GlobalStyles.numberInput}
                   placeholder={profileInfo.snit.toString() || "Tast snit"}
-                  inputMode="decimal"
-                  keyboardType="decimal-pad"
+                  inputMode="text"
+                  keyboardType="text"
                   value={grade}
                   onChangeText={setGrade}
               /> 
