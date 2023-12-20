@@ -135,7 +135,7 @@ function EducationInformationScreen(props) {
 <SafeAreaView>
   {educationInformation && (
     <View>
-      <Text style={{ fontSize: 22, marginTop: 20, alignSelf: "center"}}>{educationInformation.Navn}</Text>
+      <Text style={{ flex: 1, fontSize: 22, marginTop: 20, alignSelf: "center"}}>{educationInformation.Navn}</Text>
       <ScrollView style={{ margin: "5%" }}>
         {educationInformation.Fagområde && <Text style={GlobalStyles.text}>{"📚 Studiets fagområde: " + educationInformation.Fagområde}</Text>}
         {educationInformation.Løn && <Text style={GlobalStyles.text}>{"💸 Gennemsnitlig månedsløn som færdiguddannet: " + educationInformation.Løn}</Text>}

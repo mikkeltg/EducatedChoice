@@ -10,19 +10,24 @@ import ChatScreen from "./screens/ChatScreen";
 import Educations from "./screens/Educations";
 import Favorites from "./screens/Favorites";
 import HomeScreen from "./screens/HomeScreen"; // mangler at blive færdig
+import EducationInformationScreen from "./screens/EducationInfoScreen"; // mangler at blive færdig
+import { SafeAreaView } from 'react-native';
 
 
 const Tab = createBottomTabNavigator();
 
 function Navigator() {
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
     <NavigationContainer>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+  
+
       <Tab.Navigator
         initialRouteName="Profiloplysninger"
         tabBarOptions={{
           activeTintColor: 'blue',
-          inactiveTintColor: 'gray',
+          inactiveTintColor: 'gray'
+
         }}
       >
         <Tab.Screen
@@ -55,6 +60,20 @@ function Navigator() {
             ),
           }}
         />
+       
+        <Tab.Screen
+          name="Uddannelsesdetaljer"
+          component={EducationInformationScreen}
+          options={{
+            tabBarLabel: "Uddannelse",
+            tabBarIcon: ({ color, size }) => (
+              <MaterialIcons name="info" color={color} size={size} />
+            ),
+            tabBarButton: () => {
+              return null;
+          }}}
+        />
+
         <Tab.Screen
           name="Spørg UddannelsesGPT"
           component={ChatScreen}
@@ -66,11 +85,10 @@ function Navigator() {
           }}
         />
       </Tab.Navigator>
-    </NavigationContainer>
     </GestureHandlerRootView>
+    </NavigationContainer>
   );
 }
-
 
 
 
@@ -92,7 +110,8 @@ function Navigator() {
   // );
 
 
-export default Navigator;
+
+  export default Navigator;
 
 //How to Navigator:
 //Importere  komponente overst

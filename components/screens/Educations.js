@@ -2,6 +2,11 @@
 // Komponenten skal yderligere kunne filtrere, dsv. lave en query til databasen ud fra brugerens valg
 
 // Nødvendige pakker hentes
+
+import {
+  GestureHandlerRootView,
+  NativeViewGestureHandler,
+} from "react-native-gesture-handler";
 import React, { useState, useEffect } from "react";
 import {
     SafeAreaView,
@@ -27,6 +32,7 @@ import {
 import { getAuth } from "firebase/auth";
 import GlobalStyles from "../../GlobalStyles";
 import fetchUserGrades from "../services/GetUserGrades"
+
 
 
 // Selve komponenten, der eksporteres til App.js
@@ -153,6 +159,7 @@ const useUsersOwnAverage = async () => {
 
 
   // Nedenstående kode viser filtreringsbaren til brugeren samt en liste over de uddannelser, som lever op til den valgte filtrering
+
   return (
     <SafeAreaView style={GlobalStyles.containerL}>
       <View style={{flexDirection: "row", justifyContent: "space-evenly", marginTop: 10}}>
